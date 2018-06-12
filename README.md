@@ -71,13 +71,10 @@ None
 
 * [Apply the Windows DNS Server STIG to a node](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsDnsServer_Default.ps1)
-
 * [Apply the Windows DNS Server STIG to a node, but override the value of V-1000](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsDnsServer_Exception.ps1)
-
 * [Apply the Windows DNS Server STIG to a node, but skip the V-1000 setting](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsDnsServer_SkipRule.ps1)
-
 * [Apply the Windows DNS Server STIG to a node, but skip the AuditPolicyRules](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsDnsServer_SkipRuleType.ps1)
 
@@ -135,7 +132,7 @@ None
 * [Apply a specific Windows Server STIG version to a node](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_StigVersion.ps1)
 * [Apply the Windows Server STIG to a node, but override the default organizational settings with a local file](
-  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_OrgSetting.ps1)
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_OrgSettings.ps1)
 * [Apply the Windows Server STIG to a node, but override the value of V-1000](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_Exception.ps1)
 * [Apply the Windows Server STIG to a node, but skip the V-1000 setting](
