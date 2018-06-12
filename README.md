@@ -1,14 +1,149 @@
+﻿# PowerStigDsc
 
-# Contributing
+master: [![Build status](https://ci.appveyor.com/api/projects/)](https://ci.appveyor.com/project/)
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
+dev: [![Build status](https://ci.appveyor.com/api/projects/)](https://ci.appveyor.com/project/)
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+**PowerStigDsc** is a Windows PowerShell Desired State Configuration (DSC) composite resource to manage the configurable items of the DISA STIG's.
+This is accomplished by using Microsoft supported OSS DSC Resources from the PowerShell gallery which that are specialized to a specific area of the STIG.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct](
+  https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](
+  https://opensource.microsoft.com/codeofconduct/faq/)
+or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions
+or comments.
+
+## Contributing
+Please check out common DSC Resources [contributing guidelines](
+  https://github.com/PowerShell/DscResources/blob/master/CONTRIBUTING.md).
+
+## Composite Resources
+
+* [Browser](#Browser): Provides a mechanism to manage Browser STIG settings.
+
+* [WindowsDnsServer](#WindowsDnsServer): Provides a mechanism to manage Windows Dns Server STIG settings.
+
+* [WindowsFirewall](#WindowsFirewall): Provides a mechanism to manage the Windows Firewall STIG settings.
+
+* [WindowsServer](#WindowsServer): Provides a mechanism to manage the Windows Server STIG settings.
+
+### Browser
+
+Provides a mechanism to manage Browser STIG settings.
+
+#### Requirements
+
+None
+
+#### Parameters
+
+* **[String] BrowserName _(Mandatory)_**: The version of the Browser that the configuration is applying to.
+* **[String] BrowserVersion _(Optional)_**: The Browser version of the STIG you want to apply. If no value is provided, the most recent version of the STIG is applied.
+* **[Hashtable] Exception _(Optional)_**: A hash table of the exceptions that should be applied to the server. The hashtable must be in the format StigId = Exception.
+* **[Xml] OrgSetting _(Optional)_**: An xml document that contains the values for settings that contain a range of possible values.
+
+#### Examples
+
+* [Apply the Browser STIG to a node](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_Browser.ps1)
+
+### WindowsDnsServer
+
+Provides a mechanism to manage Windows Dns Server STIG settings.
+
+#### Requirements
+
+None
+
+#### Parameters
+
+* **[String] OsVersion _(Mandatory)_**: The version of the server OS that the configuration is applying to.
+* **[String] StigVersion _(Optional)_**: The version of the STIG you want to apply. If no value is provided, the most recent version of the STIG is applied.
+* **[String] ForestName _(Optional)_**: The FQDN of the forest the configuration is being applied to. If a domain name is not applied, the domain of the computer used to generate the configuration is used.
+* **[String] DomainName _(Optional)_**: The FQDN of the domain the configuration is being applied to. If a domain name is not applied, the domain of the computer used to generate the configuration is used.
+* **[Hashtable] Exception _(Optional)_**: A hash table of the exceptions to be applied to the server. The hashtable must be in the format StigId = Exception.
+* **[Xml] OrgSetting _(Optional)_**: This is an xml file that overrides the default settings of allowable ranges in the STIG.
+* **[PSObject] SkipRule _(Optional)_**: Rule Id/s that you do not want applied to the server.
+* **[PSObject] SkipRuleType _(Optional)_**: Rule type/s that you do not want applied to the server.
+
+#### Examples
+
+* [Apply the Windows DNS Server STIG to a node](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsDnsServer_Default.ps1)
+
+* [Apply the Windows DNS Server STIG to a node, but override the value of V-1000](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsDnsServer_Exception.ps1)
+
+* [Apply the Windows DNS Server STIG to a node, but skip the V-1000 setting](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsDnsServer_SkipRule.ps1)
+
+* [Apply the Windows DNS Server STIG to a node, but skip the AuditPolicyRules](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsDnsServer_SkipRuleType.ps1)
+
+### WindowsFirewall
+
+Provides a mechanism to manage the Windows Firewall STIG settings.
+
+#### Requirements
+
+None
+
+#### Parameters
+
+* **[String] StigVersion _(Optional)_**: The version of the STIG you want to apply. If no value is provided, the most recent version of the STIG is applied.
+* **[Hashtable] Exception _(Optional)_**: A hash table of the exceptions to be applied to the server. The hashtable must be in the format StigId = Exception.
+* **[Xml] OrgSetting _(Optional)_**: This is an xml file that overrides the default settings of allowable ranges in the STIG.
+* **[PSObject] SkipRule _(Optional)_**: Rule Id/s that you do not want applied to the server.
+* **[PSObject] SkipRuleType _(Optional)_**: Rule type/s that you do not want applied to the server.
+
+#### Examples
+
+* [Apply the Windows Firewall STIG to a node](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsFirewall_Default.ps1)
+* [Apply the Windows Firewall STIG to a node, but override the value of V-1000](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsFirewall_Exception.ps1)
+* [Apply the Windows Firewall STIG to a node, but skip the V-1000 setting](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsFirewall_SkipRule.ps1)
+* [Apply the Windows Firewall STIG to a node, but skip the AuditPolicyRules](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsFirewall_SkipRuleType.ps1)
+
+### WindowsServer
+
+Provides a mechanism to manage the Windows Server STIG settings.
+
+#### Requirements
+
+None
+
+#### Parameters
+
+* **[String] OsVersion _(Mandatory)_**: The version of the server OS that the configuration is applying to.
+* **[String] OsRole _(Mandatory)_**: The role of the computer the configuration applies to.
+* **[String] StigVersion _(Optional)_**: The version of the STIG you want to apply. If no value is provided, the most recent version of the STIG is applied.
+* **[String] ForestName _(Optional)_**: The FQDN of the forest the configuration is being applied to. If a domain name is not applied, the domain of the computer used to generate the configuration is used.
+* **[String] DomainName _(Optional)_**: The FQDN of the domain the configuration is being applied to. If a domain name is not applied, the domain of the computer used to generate the configuration is used.
+* **[Hashtable] Exception _(Optional)_**: A hash table of the exceptions to be applied to the server. The hashtable must be in the format StigId = Exception.
+* **[Xml] OrgSetting _(Optional)_**: This is an xml file that overrides the default settings of allowable ranges in the STIG.
+* **[PSObject] SkipRule _(Optional)_**: Rule Id/s that you do not want applied to the server.
+* **[PSObject] SkipRuleType _(Optional)_**: Rule type/s that you do not want applied to the server.
+
+#### Examples
+
+* [Apply the latest Windows Server STIG to a node](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_Default.ps1)
+* [Apply a specific Windows Server STIG version to a node](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_StigVersion.ps1)
+* [Apply the Windows Server STIG to a node, but override the default organizational settings with a local file](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_OrgSetting.ps1)
+* [Apply the Windows Server STIG to a node, but override the value of V-1000](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_Exception.ps1)
+* [Apply the Windows Server STIG to a node, but skip the V-1000 setting](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_SkipRule.ps1)
+* [Apply the Windows Server STIG to a node, but skip the AuditPolicyRules](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_SkipRuleType.ps1)
+## Versions
+
+### Unreleased
+
+### 1.0.0.0
