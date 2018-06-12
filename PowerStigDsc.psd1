@@ -58,7 +58,7 @@
             Tags = @('DSC','DesiredStateConfiguration','STIG','PowerStig')
 
             # A URL to the license for this module.
-            # LicenseUri = ''
+            LicenseUri = 'https://github.com/Microsoft/PowerStigDsc/blob/master/LICENSE'
 
             # A URL to the main website for this project.
             ProjectUri = 'https://github.com/Microsoft/PowerStigDsc'
