@@ -15,7 +15,7 @@ Import-Module (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\
 $TestEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $script:DSCModuleName `
     -DSCResourceName $script:DSCCompositeResourceName `
-    -TestType Integration
+    -TestType Integration -verbose
 #endregion
 
 # Using try/finally to always cleanup even if something awful happens.

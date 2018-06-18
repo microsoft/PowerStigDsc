@@ -1,4 +1,2 @@
-.vscode
-
-DscResource.Tests
-tests/*/TEST-*
+DSCResource.Tests
+.vscode/
