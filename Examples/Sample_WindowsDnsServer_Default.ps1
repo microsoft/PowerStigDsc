@@ -20,7 +20,9 @@ configuration Sample_WindowsDnsServer_Default
         WindowsDnsServer DnsSettings
         {
             OsVersion   = '2012R2'
-            StigVersion = '1.7'
+            StigVersion = '1.9'
+            DomainName  = 'integation.test'
+            ForestName  = 'integation.test'
         }
     }
 }

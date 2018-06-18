@@ -23,8 +23,10 @@ configuration Sample_WindowsDnsServer_Exception
         WindowsDnsServer DnsSettings
         {
             OsVersion   = '2012R2'
-            StigVersion = '1.7'
-            Exception   = @{"V-1000"='1'}
+            StigVersion = '1.9'
+            DomainName  = 'integation.test'
+            ForestName  = 'integation.test'
+            Exception   = @{"V-58697.a"=@{'Identity'='Administrators,DnsAdministrators'}}
         }
     }
 }

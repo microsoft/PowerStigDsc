@@ -23,7 +23,9 @@ configuration Sample_WindowsDnsServer_SkipRuleType
         {
             OsVersion    = '2012R2'
             StigVersion  = '1.7'
-            SkipRuleType = 'AuditPolicyRule'
+            DomainName   = 'integation.test'
+            ForestName   = 'integation.test'
+            SkipRuleType = 'UserRightRule'
         }
     }
 }

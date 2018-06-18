@@ -46,6 +46,11 @@ Foreach ( $rule in $rules )
         {
             [void] $IdentityList.Add($forestGroupTranslation.$identity -f $forestName )
         }
+        # default to adding the identify as provided for any non-default identities.
+        else
+        {
+            [void] $IdentityList.Add($identity)
+        }
     }
 
     UserRightsAssignment (Get-ResourceTitle -Rule $rule)

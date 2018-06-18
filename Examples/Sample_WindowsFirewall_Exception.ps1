@@ -22,7 +22,7 @@ configuration Sample_WindowsFirewall_Exception
         WindowsFirewall Sample_WindowsFirewall_Exception
         {
             StigVersion = '1.6'
-            Exception   = @{'V-1000'='1'}
+            Exception   = @{'V-17415.a'= @{'ValueData'='0'}}
         }
     }
 }

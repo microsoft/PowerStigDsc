@@ -23,8 +23,10 @@ configuration Sample_WindowsDnsServer_SkipRule
         WindowsDnsServer DnsSettings
         {
             OsVersion   = '2012R2'
-            StigVersion = '1.7'
-            SkipRule    = "V-1000"
+            StigVersion = '1.9'
+            DomainName  = 'integation.test'
+            ForestName  = 'integation.test'
+            SkipRule    = "V-58549"
         }
     }
 }

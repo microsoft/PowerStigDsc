@@ -23,9 +23,11 @@ configuration Sample_WindowsServer_SkipRule
         WindowsServer BaseLine
         {
             OsVersion   = '2012R2'
-            OsRole      = 'DomainController'
-            StigVersion = '2.8'
-            SkipRule    = 'V-1000'
+            OsRole      = 'MS'
+            StigVersion = '2.12'
+            DomainName  = 'sample.test'
+            ForestName  = 'sample.test'
+            SkipRule    = 'V-1075'
         }
     }
 }

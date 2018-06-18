@@ -21,7 +21,10 @@ configuration Sample_WindowsServer_Default
         WindowsServer BaseLine
         {
             OsVersion   = '2012R2'
-            OsRole      = 'MemberServer'
+            OsRole      = 'MS'
+            StigVersion = '2.12'
+            DomainName  = 'sample.test'
+            ForestName  = 'sample.test'
         }
     }
 }

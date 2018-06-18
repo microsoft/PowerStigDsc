@@ -22,7 +22,7 @@ configuration Sample_WindowsFirewall_SkipRule
         WindowsFirewall EnterpriseFirewallPolicy
         {
             StigVersion = '1.6'
-            SkipRule    = 'V-1000'
+            SkipRule    = 'V-17415.a'
         }
     }
 }

@@ -23,8 +23,10 @@ configuration Sample_WindowsServer_SkipRuleType
         WindowsServer BaseLine
         {
             OsVersion    = '2012R2'
-            OsRole       = 'DomainController'
-            StigVersion  = '2.8'
+            OsRole       = 'MS'
+            StigVersion  = '2.12'
+            DomainName   = 'sample.test'
+            ForestName   = 'sample.test'
             SkipRuleType = 'AuditPolicyRule'
         }
     }

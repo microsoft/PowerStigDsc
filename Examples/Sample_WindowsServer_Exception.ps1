@@ -23,9 +23,11 @@ configuration Sample_WindowsServer_Exception
         WindowsServer BaseLine
         {
             OsVersion   = '2012R2'
-            OsRole      = 'DomainController'
-            StigVersion = '2.8'
-            Exception   = @{'V-1000'='1'}
+            OsRole      = 'MS'
+            StigVersion = '2.12'
+            DomainName  = 'sample.test'
+            ForestName  = 'sample.test'
+            Exception   = @{'V-1075'= @{'ValueData'='1'} }
         }
     }
 }

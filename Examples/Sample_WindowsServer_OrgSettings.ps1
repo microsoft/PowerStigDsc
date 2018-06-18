@@ -22,9 +22,11 @@ configuration Sample_WindowsServer_OrgSettings
         WindowsServer BaseLine
         {
             OsVersion   = '2012R2'
-            OsRole      = 'DomainController'
-            StigVersion = '2.8'
-            OrgSetting  = 'C:\stigs\2012-MS-2.8.org.xml'
+            OsRole      = 'MS'
+            StigVersion = '2.12'
+            DomainName  = 'sample.test'
+            ForestName  = 'sample.test'
+            OrgSettings = 'C:\stigs\2012-MS-2.8.org.xml'
         }
     }
 }

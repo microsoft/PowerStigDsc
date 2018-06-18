@@ -21,8 +21,10 @@ configuration Sample_WindowsServer_StigVersion
         WindowsServer BaseLine
         {
             OsVersion   = '2012R2'
-            OsRole      = 'MemberServer'
-            StigVersion = '2.8'
+            OsRole      = 'MS'
+            StigVersion = '2.12'
+            DomainName  = 'sample.test'
+            ForestName  = 'sample.test'
         }
     }
 }
