@@ -1,8 +1,8 @@
-﻿# PowerStigDsc
+# PowerStigDsc
 
 master: [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/master?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/master?svg=true)
 
-dev: [![Build status](https://ci.appveyor.com/api/projects/)](https://ci.appveyor.com/project/)
+dev: [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true)
 
 **PowerStigDsc** is a Windows PowerShell Desired State Configuration (DSC) composite resource to manage the configurable items of the DISA STIG's.
 This is accomplished by using Microsoft supported OSS DSC Resources from the PowerShell gallery which that are specialized to a specific area of the STIG.
