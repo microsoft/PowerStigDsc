@@ -8,10 +8,10 @@
 #region Functions
 <#
     .SYNOPSIS
-    Applies a standard format of STIG data to resource titles.
+        Applies a standard format of STIG data to resource titles.
 
     .PARAMETER Rule
-    The Stig rule that is being created.
+        The Stig rule that is being created.
 #>
 function Get-ResourceTitle
 {
@@ -27,13 +27,13 @@ function Get-ResourceTitle
 
 <#
     .SYNOPSIS
-    Filters the STIG items to a specifc type
+        Filters the STIG items to a specifc type
 
     .PARAMETER Name
-    The name of the rule type to return
+        The name of the rule type to return
 
     .PARAMETER StigData
-    The main stig data object to filter.
+        The main stig data object to filter.
 #>
 function Get-RuleClassData
 {
