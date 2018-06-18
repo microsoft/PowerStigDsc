@@ -1,55 +1,77 @@
-#region Header
-Import-Module "$PSScriptRoot\..\helper.psm1" -Force
+$script:DSCModuleName               = 'PowerStigDsc'
+$script:DSCCompositeResourceName    = 'Browser'
 
-# Build the path to the config file.
-$compositeResourceName = $MyInvocation.MyCommand.Name -replace "\.tests\.ps1",""
-$configFilePath = Join-Path -Path $PSScriptRoot -ChildPath "$compositeResourceName.config.ps1"
-# load the config into memory
-. $configFilePath
-
-$stigList = Get-StigVersionTable -CompositeResourceName 'Browser'
-#endregion Header
-#region Test Setup
-#endregionTest Setup
-#region Tests
-Foreach ($stig in $stigList)
+#region HEADER
+# Integration Test Template Version: 1.1.1
+[String] $script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
+     (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
 {
-    Describe "Browser $($stig.TechnologyRole) $($stig.StigVersion) mof output" {
+    & git @('clone','https://github.com/PowerShell/DscResource.Tests.git',(Join-Path -Path $script:moduleRoot -ChildPath '\DSCResource.Tests\'))
+}
 
-        It 'Should compile the MOF without throwing' {
-            {
-                & "$($compositeResourceName)_config" `
-                    -BrowserVersion $stig.TechnologyRole `
-                    -StigVersion $stig.stigVersion `
-                -OutputPath $TestDrive
-            } | Should not throw
-        }
+Import-Module (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
+$TestEnvironment = Initialize-TestEnvironment `
+    -DSCModuleName $script:DSCModuleName `
+    -DSCResourceName $script:DSCCompositeResourceName `
+    -TestType Integration -Verbose
+#endregion
 
-        [xml] $dscXml = Get-Content -Path $stig.Path
+# Using try/finally to always cleanup even if something awful happens.
+try
+{
+    #region Integration Tests
+    $ConfigFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:DSCCompositeResourceName).config.ps1"
+    . $ConfigFile
 
-        $ConfigurationDocumentPath = "$TestDrive\localhost.mof"
+    $stigList = Get-StigVersionTable -CompositeResourceName 'Browser'
 
-        $instances = [Microsoft.PowerShell.DesiredStateConfiguration.Internal.DscClassCache]::ImportInstances($ConfigurationDocumentPath, 4)
-        Context 'Registry' {
-            $hasAllSettings = $true
-            $dscXml   = $dscXml.DISASTIG.RegistryRule.Rule
-            $dscMof   = $instances |
-                Where-Object {$PSItem.ResourceID -match "\[Registry\]"}
-#Make Rule Key Filter here.
-            Foreach ( $setting in $dscXml )
-            {
-                If (-not ($dscMof.ResourceID -match $setting.Id) )
+    #region Integration Tests
+    Foreach ($stig in $stigList)
+    {
+        Describe "Browser $($stig.TechnologyRole) $($stig.StigVersion) mof output" {
+
+            It 'Should compile the MOF without throwing' {
                 {
-                    Write-Warning -Message "Missing registry Setting $($setting.Id)"
-                    $hasAllSettings = $false
+                    & "$($script:DSCCompositeResourceName)_config" `
+                        -BrowserVersion $stig.TechnologyRole `
+                        -StigVersion $stig.stigVersion `
+                    -OutputPath $TestDrive
+                } | Should not throw
+            }
+
+            [xml] $dscXml = Get-Content -Path $stig.Path
+
+            $ConfigurationDocumentPath = "$TestDrive\localhost.mof"
+
+            $instances = [Microsoft.PowerShell.DesiredStateConfiguration.Internal.DscClassCache]::ImportInstances($ConfigurationDocumentPath, 4)
+            Context 'Registry' {
+                $hasAllSettings = $true
+                $dscXml   = $dscXml.DISASTIG.RegistryRule.Rule
+                $dscMof   = $instances |
+                    Where-Object {$PSItem.ResourceID -match "\[Registry\]"}
+    #Make Rule Key Filter here.
+                Foreach ( $setting in $dscXml )
+                {
+                    If (-not ($dscMof.ResourceID -match $setting.Id) )
+                    {
+                        Write-Warning -Message "Missing registry Setting $($setting.Id)"
+                        $hasAllSettings = $false
+                    }
+                }
+
+                It "Should have $($dscXml.Count) Registry settings" {
+                    $hasAllSettings | Should Be $true
                 }
             }
 
-            It "Should have $($dscXml.Count) Registry settings" {
-                $hasAllSettings | Should Be $true
-            }
         }
-
     }
+    #endregion Tests
 }
-#endregion Tests
+finally
+{
+    #region FOOTER
+    Restore-TestEnvironment -TestEnvironment $TestEnvironment
+    #endregion
+}
