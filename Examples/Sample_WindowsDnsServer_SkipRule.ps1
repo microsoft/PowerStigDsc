@@ -7,7 +7,7 @@
     would be marked to skip configuration when applied.
 #>
 
-configuration Sample_WindowsDnsServer_SkipRule
+configuration Example
 {
     param
     (
@@ -31,4 +31,4 @@ configuration Sample_WindowsDnsServer_SkipRule
     }
 }
 
-Sample_WindowsDnsServer_SkipRule
+Example

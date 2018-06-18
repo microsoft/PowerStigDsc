@@ -2,7 +2,7 @@
     In this example, the Internet Explorer 11 STIG is processed by the composite resource.
 #>
 
-Configuration Sample_Browser
+Configuration Example
 {
     param
     (
@@ -23,4 +23,4 @@ Configuration Sample_Browser
     }
 }
 
-Sample_Browser
+Example

@@ -6,7 +6,7 @@
     into the valid ranges.
 #>
 
-configuration Sample_WindowsServer_OrgSettings
+configuration Example
 {
     param
     (
@@ -31,4 +31,4 @@ configuration Sample_WindowsServer_OrgSettings
     }
 }
 
-Sample_WindowsServer_OrgSettings
+Example

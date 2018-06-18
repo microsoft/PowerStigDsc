@@ -6,7 +6,7 @@
     STIG ID V-1000 would be marked to skip configuration when applied.
 #>
 
-configuration Sample_WindowsFirewall_SkipRule
+configuration Example
 {
     param
     (
@@ -27,4 +27,4 @@ configuration Sample_WindowsFirewall_SkipRule
     }
 }
 
-Sample_WindowsFirewall_SkipRule
+Example

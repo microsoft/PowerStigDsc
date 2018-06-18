@@ -5,7 +5,7 @@
     any settings that have a valid range.
 #>
 
-configuration Sample_WindowsServer_StigVersion
+configuration Example
 {
     param
     (
@@ -29,4 +29,4 @@ configuration Sample_WindowsServer_StigVersion
     }
 }
 
-Sample_WindowsServer_StigVersion
+Example

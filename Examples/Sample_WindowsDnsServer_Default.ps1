@@ -4,7 +4,7 @@
     composite resource and merges in the default values for any settings that have a valid range.
 #>
 
-configuration Sample_WindowsDnsServer_Default
+configuration Example
 {
     param
     (
@@ -27,4 +27,4 @@ configuration Sample_WindowsDnsServer_Default
     }
 }
 
-Sample_WindowsDnsServer_Default
+Example

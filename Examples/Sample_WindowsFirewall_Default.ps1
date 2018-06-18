@@ -5,7 +5,7 @@
     that have a valid range.
 #>
 
-configuration Sample_WindowsFirewall_Default
+configuration Example
 {
     param
     (
@@ -25,4 +25,4 @@ configuration Sample_WindowsFirewall_Default
     }
 }
 
-Sample_WindowsFirewall_Default
+Example

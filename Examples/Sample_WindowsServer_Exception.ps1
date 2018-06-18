@@ -7,7 +7,7 @@
     written with the value 1.
 #>
 
-configuration Sample_WindowsServer_Exception
+configuration Example
 {
     param
     (
@@ -32,4 +32,4 @@ configuration Sample_WindowsServer_Exception
     }
 }
 
-Sample_WindowsServer_Exception
+Example

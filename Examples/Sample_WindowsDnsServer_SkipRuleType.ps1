@@ -6,7 +6,7 @@
     STIG ID's with the type 'AuditPolicyRule' would be marked to skip configuration when applied.
 #>
 
-configuration Sample_WindowsDnsServer_SkipRuleType
+configuration Example
 {
     param
     (
@@ -30,4 +30,4 @@ configuration Sample_WindowsDnsServer_SkipRuleType
     }
 }
 
-Sample_WindowsDnsServer_SkipRuleType
+Example

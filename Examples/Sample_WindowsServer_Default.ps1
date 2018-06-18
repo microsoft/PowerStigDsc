@@ -5,7 +5,7 @@
     default values for any settings that have a valid range.
 #>
 
-configuration Sample_WindowsServer_Default
+configuration Example
 {
     param
     (
@@ -29,4 +29,4 @@ configuration Sample_WindowsServer_Default
     }
 }
 
-Sample_WindowsServer_Default
+Example

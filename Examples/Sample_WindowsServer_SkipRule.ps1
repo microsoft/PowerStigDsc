@@ -7,7 +7,7 @@
     would be marked to skip configuration when applied.
 #>
 
-configuration Sample_WindowsServer_SkipRule
+configuration Example
 {
     param
     (
@@ -32,4 +32,4 @@ configuration Sample_WindowsServer_SkipRule
     }
 }
 
-Sample_WindowsServer_SkipRule
+Example

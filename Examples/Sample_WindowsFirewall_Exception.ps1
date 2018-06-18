@@ -6,7 +6,7 @@
     in STIG ID V-1000 would be over written with the value 1.
 #>
 
-configuration Sample_WindowsFirewall_Exception
+configuration Example
 {
     param
     (
@@ -27,4 +27,4 @@ configuration Sample_WindowsFirewall_Exception
     }
 }
 
-Sample_WindowsFirewall_Exception
+Example

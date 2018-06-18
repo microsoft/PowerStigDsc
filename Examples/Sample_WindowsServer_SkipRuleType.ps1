@@ -7,7 +7,7 @@
     'AuditPolicyRule' would be marked to skip configuration when applied.
 #>
 
-configuration Sample_WindowsServer_SkipRuleType
+configuration Example
 {
     param
     (
@@ -32,4 +32,4 @@ configuration Sample_WindowsServer_SkipRuleType
     }
 }
 
-Sample_WindowsServer_SkipRuleType
+Example

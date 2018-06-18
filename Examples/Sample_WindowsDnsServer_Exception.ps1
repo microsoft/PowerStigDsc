@@ -7,7 +7,7 @@
     over written with the value 1.
 #>
 
-configuration Sample_WindowsDnsServer_Exception
+configuration Example
 {
     param
     (
@@ -31,4 +31,4 @@ configuration Sample_WindowsDnsServer_Exception
     }
 }
 
-Sample_WindowsDnsServer_Exception
+Example
