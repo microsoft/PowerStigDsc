@@ -57,7 +57,7 @@ Configuration Browser
         $BrowserVersion,
 
         [Parameter()]
-        [ValidateSet('1.13')]
+        [ValidateSet('1.13','1.15')]
         [ValidateNotNullOrEmpty()]
         [version]
         $StigVersion,
