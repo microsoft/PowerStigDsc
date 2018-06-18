@@ -1,83 +1,3 @@
-
-####################################    Common test Helpers    #$###################################
-<#
-    .SYNOPSIS
-        Retrieves the parse errors for the given file.
-
-    .PARAMETER FilePath
-        The path to the file to get parse errors for.
-#>
-function Get-FileParseErrors
-{
-    [OutputType([System.Management.Automation.Language.ParseError[]])]
-    [CmdletBinding()]
-    param
-    (
-        [Parameter(ValueFromPipeline = $true, Mandatory = $true)]
-        [String]
-        $FilePath
-    )
-
-    $parseErrors = $null
-
-    $null = [System.Management.Automation.Language.Parser]::ParseFile(
-            $FilePath,
-            [ref] $null,
-            [ref] $parseErrors
-    )
-    return $parseErrors
-}
-
-<#
-    .SYNOPSIS
-        Retrieves all text files under the given root file path.
-
-    .PARAMETER Root
-        The root file path under which to retrieve all text files.
-
-    .NOTES
-        Retrieves all files with the '.gitignore', '.gitattributes', '.ps1', '.psm1', '.psd1',
-        '.json', '.xml', '.cmd', or '.mof' file extensions.
-#>
-function Get-TextFilesList
-{
-    [OutputType([System.IO.FileInfo[]])]
-    [CmdletBinding()]
-    param
-    (
-        [Parameter(Mandatory = $true)]
-        [String]
-        $FilePath
-    )
-
-    $textFileExtensions = @('.gitignore', '.gitattributes', '.ps1', '.psm1', '.psd1', '.json',
-    '.xml', '.cmd', '.mof')
-
-    return Get-ChildItem -Path $FilePath -File -Recurse | Where-Object { $textFileExtensions `
-    -contains $_.Extension }
-}
-function Test-FileInUnicode
-{
-    [OutputType([Boolean])]
-    [CmdletBinding()]
-    param
-    (
-        [Parameter(ValueFromPipeline = $true, Mandatory = $true)]
-        [System.IO.FileInfo]
-        $FileInfo
-    )
-
-    $filePath = $FileInfo.FullName
-
-    $fileBytes = [System.IO.File]::ReadAllBytes($filePath)
-
-    $zeroBytes = @( $fileBytes -eq 0 )
-
-    return ($zeroBytes.Length -ne 0)
-}
-
-####################################    Common test Helpers    #####################################
-
 function Get-PowerStigVersionFromManifest
 {
     [OutputType([version])]
@@ -86,8 +6,6 @@ function Get-PowerStigVersionFromManifest
 
     Import-PowerShelldata  $releaseDir\$ModuleName.psd1
 }
-
-
 
 function Get-RequiredStigDataVersion
 {
@@ -291,9 +209,6 @@ function Get-ValidStigVersionNumbers
 }
 
 Export-ModuleMember -Function @(
-    'Get-FileParseErrors',
-    'Get-TextFilesList',
-    'Test-FileInUnicode',
     'Get-StigVersionTable',
     'Get-ConfigurationName',
     'Get-StigVersionParameterValidateSet',
