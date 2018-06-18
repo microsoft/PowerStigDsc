@@ -1,4 +1,4 @@
-﻿<#
+<#
     Use embedded STIG data and skip an entire rule set.
     In this example, the Windows DNS Server 2012 R2 V1 R7 STIG is processed by the composite
     resource and merges in the default values for any settings that have a valid range.

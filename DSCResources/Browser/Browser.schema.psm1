@@ -82,31 +82,39 @@ using module PowerStig
     )
 
     #region Add required data to XML
-    if ( $Exception ) {
+    if ( $Exception )
+    {
         $exceptionsObject = [StigException]::ConvertFrom( $Exception )
     }
-    else {
+    else
+    {
         $exceptionsObject = $null
     }
 
-    if ( $SkipRule ) {
+    if ( $SkipRule )
+    {
         $skipRuleObject = [SkippedRule]::ConvertFrom( $SkipRule )
     }
-    else {
+    else
+    {
         $skipRuleObject = $null
     }
 
-    if ( $SkipRuleType ) {
+    if ( $SkipRuleType )
+    {
         $skipRuleTypeObject = [SkippedRuleType]::ConvertFrom( $SkipRuleType )
     }
-    else {
+    else
+    {
         $skipRuleTypeObject = $null
     }
 
-    if ( $OrgSettings ) {
+    if ( $OrgSettings )
+    {
         $orgSettingsObject = Get-OrgSettingsObject -OrgSettings $OrgSettings
     }
-    else {
+    else
+    {
         $orgSettingsObject = $null
     }
     #endregion

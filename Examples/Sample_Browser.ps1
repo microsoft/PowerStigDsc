@@ -1,4 +1,4 @@
-﻿<#
+<#
     In this example, the Internet Explorer 11 STIG is processed by the composite resource.
 #>
 

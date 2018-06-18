@@ -1,4 +1,4 @@
-﻿<#
+<#
     Use embedded STIG data and skip an entire rule set. In this example,
     the Windows Server 2012R2 V2 R8 domain controller STIG is processed by
     the composite resource and merges in the default values for any settings

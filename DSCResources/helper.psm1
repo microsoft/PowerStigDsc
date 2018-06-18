@@ -6,6 +6,13 @@
 #endregion
 
 #region Functions
+<#
+    .SYNOPSIS
+    Applies a standard format of STIG data to resource titles.
+
+    .PARAMETER Rule
+    The Stig rule that is being created.
+#>
 function Get-ResourceTitle
 {
     param
@@ -18,6 +25,16 @@ function Get-ResourceTitle
     return "[$($rule.Id)][$($rule.severity)][$($rule.title)]"
 }
 
+<#
+    .SYNOPSIS
+    Filters the STIG items to a specifc type
+
+    .PARAMETER Name
+    The name of the rule type to return
+
+    .PARAMETER StigData
+    The main stig data object to filter.
+#>
 function Get-RuleClassData
 {
     param
