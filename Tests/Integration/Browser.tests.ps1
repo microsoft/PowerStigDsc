@@ -12,24 +12,20 @@ $stigList = Get-StigVersionTable -CompositeResourceName 'Browser'
 #region Test Setup
 #endregionTest Setup
 #region Tests
-Foreach ($stig in $stigList.GetEnumerator())
+Foreach ($stig in $stigList)
 {
-    $stigDetails = $stig.Key -Split "-"
-    $BrowserVersion = $stigDetails[2]
-    $StigVersion = $stigDetails[3]
+    Describe "Browser $($stig.TechnologyRole) $($stig.StigVersion) mof output" {
 
-    Describe "Browser $BrowserName $BrowserVersion mof output" {
-    
         It 'Should compile the MOF without throwing' {
             {
                 & "$($compositeResourceName)_config" `
-                    -BrowserVersion $BrowserVersion `
-                    -StigVersion $StigVersion `
+                    -BrowserVersion $stig.TechnologyRole `
+                    -StigVersion $stig.stigVersion `
                 -OutputPath $TestDrive
             } | Should not throw
         }
 
-        [xml] $dscXml = Get-Content -Path $stig.Value
+        [xml] $dscXml = Get-Content -Path $stig.Path
 
         $ConfigurationDocumentPath = "$TestDrive\localhost.mof"
 
@@ -37,7 +33,7 @@ Foreach ($stig in $stigList.GetEnumerator())
         Context 'Registry' {
             $hasAllSettings = $true
             $dscXml   = $dscXml.DISASTIG.RegistryRule.Rule
-            $dscMof   = $instances | 
+            $dscMof   = $instances |
                 Where-Object {$PSItem.ResourceID -match "\[Registry\]"}
 #Make Rule Key Filter here.
             Foreach ( $setting in $dscXml )
@@ -53,7 +49,7 @@ Foreach ($stig in $stigList.GetEnumerator())
                 $hasAllSettings | Should Be $true
             }
         }
- 
+
     }
 }
 #endregion Tests

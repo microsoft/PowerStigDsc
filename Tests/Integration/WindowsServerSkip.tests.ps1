@@ -4,24 +4,18 @@ Import-Module "$PSScriptRoot\..\helper.psm1" -Force
 # Build the path to the config file.
 $compositeResourceName = $MyInvocation.MyCommand.Name -replace "\.tests\.ps1",""
 $configFilePath = Join-Path -Path $PSScriptRoot -ChildPath "$compositeResourceName.config.ps1"
-
 # load the config into memory
 . $configFilePath
 
-$stigList = Get-StigVersionTable -CompositeResourceName 'WindowsServer' -Filter "DC"
+$stigList = Get-StigVersionTable -CompositeResourceName 'WindowsServer'
 #endregion Header
 
 #region Tests
-Foreach ($stig in $stigList.GetEnumerator())
+Foreach ($stig in $stigList)
 {
-    $stigDetails  = $stig.Key -Split "-"
-    $osVersion    = $stigDetails[1]
-    $osRole       = $stigDetails[2]
-    $stigVersion  = $stigDetails[-1]
+    Describe "Windows $($stig.TechnologyVersion) $($stig.TechnologyRole) $($stig.StigVersion) Single SkipRule/RuleType mof output" {
 
-    Describe "Windows $osVersion $osRole $stigVersion Single SkipRule/RuleType mof output" {
-        
-        [xml] $dscXml = Get-Content -Path $stig.Value
+        [xml] $dscXml = Get-Content -Path $stig.Path
         $RegistryIds = $dscXml.DISASTIG.RegistryRule.Rule.id
         $SkipRule     = Get-Random -InputObject $RegistryIds
         $skipRuleType = "AuditPolicyRule"
@@ -29,9 +23,11 @@ Foreach ($stig in $stigList.GetEnumerator())
         It 'Should compile the MOF without throwing' {
             {
                 & "$($compositeResourceName)_config" `
-                    -OsVersion $osVersion  `
-                    -OsRole $osRole `
-                    -StigVersion $stigVersion `
+                    -OsVersion $stig.TechnologyVersion  `
+                    -OsRole $stig.TechnologyRole `
+                    -StigVersion $stig.StigVersion `
+                    -ForestName 'integration.test' `
+                    -DomainName 'integration.test' `
                     -SkipRule $skipRule `
                     -SkipRuleType $skipRuleType `
                     -OutputPath $TestDrive
@@ -57,10 +53,10 @@ Foreach ($stig in $stigList.GetEnumerator())
             }
         }
     }
-    
-    Describe "Windows $osVersion $osRole $stigVersion Multiple SkipRule/RuleType mof output" {
-        
-        [xml] $dscXml = Get-Content -Path $stig.Value
+
+    Describe "Windows $($stig.TechnologyVersion) $($stig.TechnologyRole) $($stig.StigVersion) Multiple SkipRule/RuleType mof output" {
+
+        [xml] $dscXml = Get-Content -Path $stig.Path
         $RegistryIds = $dscXml.DISASTIG.RegistryRule.Rule.id
         $skipRule = @()
         $skipCount = 2
@@ -74,20 +70,22 @@ Foreach ($stig in $stigList.GetEnumerator())
             {
                 $null
             }
-            else 
+            else
             {
                 $skiprule += $skipToAdd
             }
         }
 
         $skipRuleType = @("AuditPolicyRule", "AccountPolicyRule")
-        
+
         It 'Should compile the MOF without throwing' {
             {
                 & "$($compositeResourceName)_config" `
-                    -OsVersion $osVersion  `
-                    -OsRole $osRole `
-                    -StigVersion $stigVersion `
+                    -OsVersion $stig.TechnologyVersion  `
+                    -OsRole $stig.TechnologyRole `
+                    -StigVersion $stig.StigVersion `
+                    -ForestName 'integration.test' `
+                    -DomainName 'integration.test' `
                     -SkipRule $skipRule `
                     -SkipRuleType $skipRuleType `
                     -OutputPath $TestDrive
@@ -106,7 +104,7 @@ Foreach ($stig in $stigList.GetEnumerator())
             $dscPermissionXml = $dscXml.DISASTIG.AccountPolicyRule.Rule | Where-Object {$_.ConversionStatus -eq "Pass"}
 
             $dscXml = ($($dscAuditXml.Count) + $($dscPermissionXml.count) + $($skipRule.Count))
-            
+
             $dscMof = $instances | Where-Object {$PSItem.ResourceID -match "\[Skip\]"}
             #endregion
 

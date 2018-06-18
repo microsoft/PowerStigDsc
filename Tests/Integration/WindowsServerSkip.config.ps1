@@ -1,6 +1,6 @@
 Configuration WindowsServerSkip_config
 {
-    param 
+    param
     (
         [Parameter(Mandatory = $true)]
         [string]
@@ -13,6 +13,14 @@ Configuration WindowsServerSkip_config
         [Parameter(Mandatory = $true)]
         [version]
         $StigVersion,
+
+        [Parameter(Mandatory = $true)]
+        [string]
+        $ForestName,
+
+        [Parameter(Mandatory = $true)]
+        [string]
+        $DomainName,
 
         [Parameter(Mandatory = $false)]
         [psobject]
@@ -32,8 +40,10 @@ Configuration WindowsServerSkip_config
             OsVersion    = $OsVersion
             OsRole       = $OsRole
             StigVersion  = $StigVersion
+            ForestName  = $ForestName
+            DomainName  = $DomainName
             SkipRule     = $SkipRule
             SkipRuleType = $SkipRuleType
-        } 
+        }
     }
 }

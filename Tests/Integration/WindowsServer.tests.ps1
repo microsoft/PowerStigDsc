@@ -12,26 +12,23 @@ $stigList = Get-StigVersionTable -CompositeResourceName 'WindowsServer'
 #region Test Setup
 #endregionTest Setup
 #region Tests
-Foreach ($stig in $stigList.GetEnumerator())
+Foreach ($stig in $stigList)
 {
-    $stigDetails = $stig.Key -Split "-"
-    $osVersion   = $stigDetails[1]
-    $osRole      = $stigDetails[2]
-    $stigVersion = $stigDetails[3]
+    Describe "Windows $($stig.TechnologyVersion) $($stig.TechnologyRole) $($stig.StigVersion) mof output" {
 
-    Describe "Windows $osVersion $osRole $stigVersion mof output" {
-    
         It 'Should compile the MOF without throwing' {
             {
                 & "$($compositeResourceName)_config" `
-                    -OsVersion $osVersion  `
-                    -OsRole $osRole `
-                    -StigVersion $stigVersion `
+                    -OsVersion $stig.TechnologyVersion  `
+                    -OsRole $stig.TechnologyRole `
+                    -StigVersion $stig.StigVersion `
+                    -ForestName 'integration.test' `
+                    -DomainName 'integration.test' `
                     -OutputPath $TestDrive
             } | Should not throw
         }
 
-        [xml] $dscXml = Get-Content -Path $stig.Value
+        [xml] $dscXml = Get-Content -Path $stig.Path
 
         $ConfigurationDocumentPath = "$TestDrive\localhost.mof"
 
@@ -40,7 +37,7 @@ Foreach ($stig in $stigList.GetEnumerator())
         Context 'AuditPolicy' {
             $hasAllSettings = $true
             $dscXml         = $dscXml.DISASTIG.AuditPolicyRule.Rule
-            $dscMof         = $instances | 
+            $dscMof         = $instances |
                 Where-Object {$PSItem.ResourceID -match "\[AuditPolicySubcategory\]"}
 
             Foreach ( $setting in $dscXml )
@@ -56,12 +53,12 @@ Foreach ($stig in $stigList.GetEnumerator())
                 $hasAllSettings | Should Be $true
             }
         }
-    
+
         Context 'Permissions' {
             $hasAllSettings = $true
             $dscXmlPermissionPolicy = $dscXml.DISASTIG.PermissionRule.Rule |
                 Where-Object {$PSItem.conversionstatus -eq "pass"}
-            $dscMofPermissionPolicy = $instances | 
+            $dscMofPermissionPolicy = $instances |
                 Where-Object {$PSItem.ResourceID -match "\[NTFSAccessEntry\]|\[RegistryAccessEntry\]"}
 
             Foreach ($setting in $dscXmlPermissionPolicy)
@@ -77,11 +74,11 @@ Foreach ($stig in $stigList.GetEnumerator())
                 $hasAllSettings | Should Be $true
             }
         }
-   
+
         Context 'Registry' {
             $hasAllSettings = $true
             $dscXml   = $dscXml.DISASTIG.RegistryRule.Rule
-            $dscMof   = $instances | 
+            $dscMof   = $instances |
                 Where-Object {$PSItem.ResourceID -match "\[Registry\]"}
 
             Foreach ( $setting in $dscXml )
@@ -101,7 +98,7 @@ Foreach ($stig in $stigList.GetEnumerator())
         Context 'WMI' {
             $hasAllSettings = $true
             $dscXml    = $dscXml.DISASTIG.WmiRule.Rule
-            $dscMof   = $instances | 
+            $dscMof   = $instances |
                 Where-Object {$PSItem.ResourceID -match "\[script\]"}
 
             Foreach ( $setting in $dscXml )
@@ -121,7 +118,7 @@ Foreach ($stig in $stigList.GetEnumerator())
         Context 'Services' {
             $hasAllSettings = $true
             $dscXml = $dscXml.DISASTIG.ServiceRule.Rule
-            $dscMof = $instances | 
+            $dscMof = $instances |
                 Where-Object {$PSItem.ResourceID -match "\[xService\]"}
 
             Foreach ( $setting in $dscXml )
@@ -137,11 +134,11 @@ Foreach ($stig in $stigList.GetEnumerator())
                 $hasAllSettings | Should Be $true
             }
         }
-        
+
         Context 'AccountPolicy' {
             $hasAllSettings = $true
             $dscXml = $dscXml.DISASTIG.AccountPolicyRule.Rule
-            $dscMof = $instances | 
+            $dscMof = $instances |
                 Where-Object {$PSItem.ResourceID -match "\[AccountPolicy\]"}
 
             Foreach ( $setting in $dscXml )
@@ -161,7 +158,7 @@ Foreach ($stig in $stigList.GetEnumerator())
         Context 'UserRightsAssignment' {
             $hasAllSettings = $true
             $dscXml = $dscXml.DISASTIG.UserRightRule.Rule
-            $dscMof = $instances | 
+            $dscMof = $instances |
                 Where-Object {$PSItem.ResourceID -match "\[UserRightsAssignment\]"}
 
             Foreach ( $setting in $dscXml )
@@ -177,11 +174,11 @@ Foreach ($stig in $stigList.GetEnumerator())
                 $hasAllSettings | Should Be $true
             }
         }
-        
+
         Context 'SecurityOption' {
             $hasAllSettings = $true
             $dscXml = $dscXml.DISASTIG.SecurityOptionRule.Rule
-            $dscMof = $instances | 
+            $dscMof = $instances |
                 Where-Object {$PSItem.ResourceID -match "\[SecurityOption\]"}
 
             Foreach ( $setting in $dscXml )
@@ -201,7 +198,7 @@ Foreach ($stig in $stigList.GetEnumerator())
         Context 'Windows Feature' {
             $hasAllSettings = $true
             $dscXml = $dscXml.DISASTIG.WindowsFeatureRule.Rule
-            $dscMof = $instances | 
+            $dscMof = $instances |
                 Where-Object {$PSItem.ResourceID -match "\[WindowsFeature\]"}
 
             Foreach ($setting in $dscXml)

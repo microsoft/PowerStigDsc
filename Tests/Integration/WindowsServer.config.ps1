@@ -1,6 +1,6 @@
 Configuration WindowsServer_config
 {
-    param 
+    param
     (
         [Parameter(Mandatory = $true)]
         [string]
@@ -12,7 +12,15 @@ Configuration WindowsServer_config
 
         [Parameter(Mandatory = $true)]
         [version]
-        $StigVersion
+        $StigVersion,
+
+        [Parameter(Mandatory = $true)]
+        [string]
+        $ForestName,
+
+        [Parameter(Mandatory = $true)]
+        [string]
+        $DomainName
     )
 
     Import-DscResource -ModuleName PowerStigDsc
@@ -24,6 +32,8 @@ Configuration WindowsServer_config
             OsVersion   = $OsVersion
             OsRole      = $OsRole
             StigVersion = $StigVersion
-        } 
+            ForestName  = $ForestName
+            DomainName  = $DomainName
+        }
     }
 }
