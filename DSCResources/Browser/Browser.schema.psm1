@@ -1,11 +1,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-#region Header
 using module ..\helper.psm1
 using module PowerStig
-#endregion Header
-#region Composite
+
 <#
     .SYNOPSIS
         A composite DSC resource to manage the Browser STIG settings
@@ -47,7 +45,8 @@ using module PowerStig
                 StigVersion = '1.7'
             }
         }
-#>Configuration Browser
+#>
+Configuration Browser
 {
     [CmdletBinding()]
     Param
@@ -122,7 +121,9 @@ using module PowerStig
     $technology = [Technology]::New( "Windows" )
     $technologyVersion = [TechnologyVersion]::New( 'All', $technology )
     $technologyRole = [TechnologyRole]::New( $BrowserVersion, $technologyVersion )
-    $StigDataObject = [StigData]::New( $StigVersion, $orgSettingsObject, $technology, $technologyRole, $technologyVersion, $exceptionsObject , $skipRuleTypeObject, $skipRuleObject )
+    $StigDataObject = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
+                                       $technologyRole, $technologyVersion, $exceptionsObject,
+                                       $skipRuleTypeObject, $skipRuleObject )
 
     $StigData = $StigDataObject.StigXml
 
@@ -130,4 +131,3 @@ using module PowerStig
     . "$resourcePath\windows.Registry.ps1"
 
 }
-#endregion Composite

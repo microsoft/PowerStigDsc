@@ -1,11 +1,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-#region Header
 using module ..\helper.psm1
 using module PowerStig
-#endregion Header
-#region Composite
+
 <#
     .SYNOPSIS
         A composite DSC resource to manage the Windows Firewall STIG settings
@@ -30,19 +28,6 @@ using module PowerStig
     .PARAMETER SkipRuleType
         All STIG rule IDs of the specified type are collected in an array and passed to the Skip-Rule
         function. Each rule follows the same process as the SkipRule parameter.
-
-    .EXAMPLE
-        In this example the 1.6 of the Windows firewall STIG is applied.
-
-        Import-DscResource -ModuleName PowerStigDsc
-
-        Node localhost
-        {
-            WindowsFirewall BaseLine
-            {
-                StigVersion = '1.6'
-            }
-        }
 #>
 Configuration WindowsFirewall
 {
@@ -115,7 +100,9 @@ Configuration WindowsFirewall
     $technology        = [Technology]::New( "Windows" )
     $technologyVersion = [TechnologyVersion]::New( "All", $technology )
     $technologyRole    = [TechnologyRole]::New( "FW", $technologyVersion )
-    $StigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology, $technologyRole, $technologyVersion, $exceptionsObject , $skipRuleTypeObject, $skipRuleObject )
+    $StigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
+                                          $technologyRole, $technologyVersion, $exceptionsObject,
+                                          $skipRuleTypeObject, $skipRuleObject )
 
     $StigData = $StigDataObject.StigXml
 
@@ -123,4 +110,3 @@ Configuration WindowsFirewall
         Import-DscResource -ModuleName PSDesiredStateConfiguration
         . "$resourcePath\windows.Registry.ps1"
     }
-#endregion Composite

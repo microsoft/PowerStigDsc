@@ -17,9 +17,8 @@ Configuration Sample_Browser
     {
         Browser InternetExplorerSettings
         {
-            BrowserName    = 'IE'
-            BrowserVersion = '11'
-            Stigversion    = '1.13'
+            BrowserVersion = 'IE11'
+            Stigversion    = '1.15'
         }
     }
 }
