@@ -1,54 +1,78 @@
-#region Header
-Import-Module "$PSScriptRoot\..\helper.psm1" -Force
+$script:DSCModuleName               = 'PowerStigDsc'
+$script:DSCCompositeResourceName    = 'WindowsFirewall'
 
-# Build the path to the config file.
-$compositeResourceName = $MyInvocation.MyCommand.Name -replace "\.tests\.ps1",""
-$configFilePath = Join-Path -Path $PSScriptRoot -ChildPath "$compositeResourceName.config.ps1"
-# load the config into memory
-. $configFilePath
-
-$stigList = Get-StigVersionTable -CompositeResourceName 'WindowsFirewall'
-#endregion Header
-#region Test Setup
-#endregion Test Setup
-#region Tests
-Foreach ($stig in $stigList)
+#region HEADER
+# Integration Test Template Version: 1.1.1
+[String] $script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests'))) -or `
+     (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1'))) )
 {
-    Describe "Windows Firewall $($stig.stigVersion) mof output" {
+    & git @('clone','https://github.com/PowerShell/DscResource.Tests.git',(Join-Path -Path $script:moduleRoot -ChildPath '\DSCResource.Tests\'))
+}
 
-        It 'Should compile the MOF without throwing' {
-            {
-                & "$($compositeResourceName)_config" `
-                    -StigVersion $stig.StigVersion `
-                    -OutputPath $TestDrive
-            } | Should Not throw
-        }
+Import-Module (Join-Path -Path $script:moduleRoot -ChildPath 'Tests\helper.psm1' ) -Force
+Import-Module (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\TestHelper.psm1') -Force
+$TestEnvironment = Initialize-TestEnvironment `
+    -DSCModuleName $script:DSCModuleName `
+    -DSCResourceName $script:DSCCompositeResourceName `
+    -TestType Integration -Verbose
+#endregion
 
-        [xml] $dscXml = Get-Content -Path $stig.Path
+# Using try/finally to always cleanup even if something awful happens.
+try
+{
+    #region Integration Tests
+    $ConfigFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:DSCCompositeResourceName).config.ps1"
+    . $ConfigFile
 
-        $ConfigurationDocumentPath = "$TestDrive\localhost.mof"
+    $stigList = Get-StigVersionTable -CompositeResourceName $script:DSCCompositeResourceName
 
-        $instances = [Microsoft.PowerShell.DesiredStateConfiguration.Internal.DscClassCache]::ImportInstances($ConfigurationDocumentPath, 4)
+    #region Integration Tests
 
-        Context 'Registry' {
-            $hasAllSettings = $true
-            $dscXml = $dscXml.DISASTIG.RegistryRule.Rule
-            $dscMof = $instances |
-                Where-Object {$PSItem.ResourceID -match "\[Registry\]"}
+    Foreach ($stig in $stigList)
+    {
+        Describe "Windows Firewall $($stig.stigVersion) mof output" {
 
-            Foreach ($setting in $dscXml)
-            {
-                If (-not ($dscMof.ResourceID -match $setting.Id) )
+            It 'Should compile the MOF without throwing' {
                 {
-                    Write-Warning -Message "Missing registry Setting $($setting.Id)"
-                    $hasAllSettings = $false
-                }
+                    & "$($compositeResourceName)_config" `
+                        -StigVersion $stig.StigVersion `
+                        -OutputPath $TestDrive
+                } | Should Not throw
             }
 
-            It "Should have $($dscXml.Count) Registry settings" {
-                $hasAllSettings | Should Be $true
+            [xml] $dscXml = Get-Content -Path $stig.Path
+
+            $ConfigurationDocumentPath = "$TestDrive\localhost.mof"
+
+            $instances = [Microsoft.PowerShell.DesiredStateConfiguration.Internal.DscClassCache]::ImportInstances($ConfigurationDocumentPath, 4)
+
+            Context 'Registry' {
+                $hasAllSettings = $true
+                $dscXml = $dscXml.DISASTIG.RegistryRule.Rule
+                $dscMof = $instances |
+                    Where-Object {$PSItem.ResourceID -match "\[Registry\]"}
+
+                Foreach ($setting in $dscXml)
+                {
+                    If (-not ($dscMof.ResourceID -match $setting.Id) )
+                    {
+                        Write-Warning -Message "Missing registry Setting $($setting.Id)"
+                        $hasAllSettings = $false
+                    }
+                }
+
+                It "Should have $($dscXml.Count) Registry settings" {
+                    $hasAllSettings | Should Be $true
+                }
             }
         }
     }
+    #endregion Tests
 }
-#endregion Tests
+finally
+{
+    #region FOOTER
+    Restore-TestEnvironment -TestEnvironment $TestEnvironment
+    #endregion
+}

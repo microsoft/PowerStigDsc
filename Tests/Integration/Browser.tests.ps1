@@ -25,7 +25,7 @@ try
     $ConfigFile = Join-Path -Path $PSScriptRoot -ChildPath "$($script:DSCCompositeResourceName).config.ps1"
     . $ConfigFile
 
-    $stigList = Get-StigVersionTable -CompositeResourceName 'Browser'
+    $stigList = Get-StigVersionTable -CompositeResourceName $script:DSCCompositeResourceName
 
     #region Integration Tests
     Foreach ($stig in $stigList)
