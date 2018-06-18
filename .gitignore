@@ -1,4 +1,4 @@
 .vscode
 
-/release
+DscResource.Tests
 tests/*/TEST-*
