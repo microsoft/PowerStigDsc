@@ -33,13 +33,13 @@ try
         Describe "Windows $($stig.TechnologyVersion) $($stig.TechnologyRole) $($stig.StigVersion) Single SkipRule/RuleType mof output" {
 
             [xml] $dscXml = Get-Content -Path $stig.Path
-            $RegistryIds = $dscXml.DISASTIG.RegistryRule.Rule.id
+            $RegistryIds  = $dscXml.DISASTIG.RegistryRule.Rule.id
             $SkipRule     = Get-Random -InputObject $RegistryIds
             $skipRuleType = "AuditPolicyRule"
 
             It 'Should compile the MOF without throwing' {
                 {
-                    & "$($compositeResourceName)_config" `
+                    & "$($script:DSCCompositeResourceName)_config" `
                         -OsVersion $stig.TechnologyVersion  `
                         -OsRole $stig.TechnologyRole `
                         -StigVersion $stig.StigVersion `
@@ -97,7 +97,7 @@ try
 
             It 'Should compile the MOF without throwing' {
                 {
-                    & "$($compositeResourceName)_config" `
+                    & "$($script:DSCCompositeResourceName)_config" `
                         -OsVersion $stig.TechnologyVersion  `
                         -OsRole $stig.TechnologyRole `
                         -StigVersion $stig.StigVersion `

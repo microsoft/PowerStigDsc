@@ -43,11 +43,11 @@ $compositeSchemaPath   = "$($script:moduleRoot)\DscResources\$script:DSCComposit
                 $configurationName | Should Be $script:DSCCompositeResourceName
             }
 
-            It "Should match ValidateSet from PowerStig $powerStigVersion" {
+            It "Should match ValidateSet from PowerStig" {
                 $validateSet = Get-StigVersionParameterValidateSet -FilePath $compositeSchemaPath
                 $powerStigVersion = Get-PowerStigVersionFromManifest -ManifestPath "$($script:moduleRoot)\$($script:DSCModuleName).psd1"
                 $availableStigVersions = Get-ValidStigVersionNumbers -CompositeResourceName $script:DSCCompositeResourceName -ModuleVersion $powerStigVersion
-                $validateSet | Should Be $availableStigVersions
+                $validateSet | Should BeIn $availableStigVersions
             }
         }
 }

@@ -34,7 +34,7 @@ try
 
             It 'Should compile the MOF without throwing' {
                 {
-                    & "$($compositeResourceName)_config" `
+                    & "$($script:DSCCompositeResourceName)_config" `
                         -OsVersion $stig.TechnologyVersion  `
                         -OsRole $stig.TechnologyRole `
                         -StigVersion $stig.StigVersion `
