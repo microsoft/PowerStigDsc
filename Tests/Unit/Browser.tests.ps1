@@ -1,6 +1,6 @@
 
 $script:DSCModuleName            = 'PowerStigDsc'
-$script:DSCCompositeResourceName = 'WindowsServer'
+$script:DSCCompositeResourceName = 'Browser'
 
 #region HEADER
 [String] $script:moduleRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $script:MyInvocation.MyCommand.Path))
@@ -25,31 +25,32 @@ $compositeManifestPath = "$($script:moduleRoot)\DscResources\$script:DSCComposit
 $compositeSchemaPath   = "$($script:moduleRoot)\DscResources\$script:DSCCompositeResourceName\$script:DSCCompositeResourceName.schema.psm1"
 #endregion
 
-    # Begin Testing
-    try
-    {
-        Describe "$($script:DSCCompositeResourceName) Composite resource" {
+# Begin Testing
+try
+{
+    Describe "$($script:DSCCompositeResourceName) Composite resource" {
 
-            It 'Should be a valid manifest' {
-                {Test-ModuleManifest -Path $compositeManifestPath} | Should Not Throw
-            }
-
-            It 'Should contain a schema module' {
-                Test-Path -Path $compositeSchemaPath | Should Be $true
-            }
-
-            It 'Should contain a correctly named configuration' {
-                $configurationName = Get-ConfigurationName -FilePath $compositeSchemaPath
-                $configurationName | Should Be $script:DSCCompositeResourceName
-            }
-
-            It "Should match ValidateSet from PowerStig $powerStigVersion" {
-                $validateSet = Get-StigVersionParameterValidateSet -FilePath $compositeSchemaPath
-                $powerStigVersion = Get-PowerStigVersionFromManifest -ManifestPath "$($script:moduleRoot)\$($script:DSCModuleName).psd1"
-                $availableStigVersions = Get-ValidStigVersionNumbers -CompositeResourceName $script:DSCCompositeResourceName -ModuleVersion $powerStigVersion
-                $validateSet | Should Be $availableStigVersions
-            }
+        It 'Should be a valid manifest' {
+            {Test-ModuleManifest -Path $compositeManifestPath} | Should Not Throw
         }
+
+        It 'Should contain a schema module' {
+            Test-Path -Path $compositeSchemaPath | Should Be $true
+        }
+
+        It 'Should contain a correctly named configuration' {
+            $configurationName = Get-ConfigurationName -FilePath $compositeSchemaPath
+            $configurationName | Should Be $script:DSCCompositeResourceName
+        }
+
+        It "Should match ValidateSet from PowerStig $powerStigVersion" {
+            $validateSet = Get-StigVersionParameterValidateSet -FilePath $compositeSchemaPath
+            $powerStigVersion = Get-PowerStigVersionFromManifest -ManifestPath "$($script:moduleRoot)\$($script:DSCModuleName).psd1"
+            $availableStigVersions = Get-ValidStigVersionNumbers -CompositeResourceName $script:DSCCompositeResourceName -ModuleVersion $powerStigVersion
+
+            $validateSet | Should Be $availableStigVersions
+        }
+    }
 }
 finally
 {

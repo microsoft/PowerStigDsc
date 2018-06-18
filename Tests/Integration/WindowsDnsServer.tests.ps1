@@ -1,5 +1,5 @@
-$script:DSCModuleName               = 'PowerStigDsc'
-$script:DSCCompositeResourceName    = 'WindowsDnsServer'
+$script:DSCModuleName            = 'PowerStigDsc'
+$script:DSCCompositeResourceName = 'WindowsDnsServer'
 
 #region HEADER
 # Integration Test Template Version: 1.1.1
@@ -15,7 +15,7 @@ Import-Module (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\
 $TestEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $script:DSCModuleName `
     -DSCResourceName $script:DSCCompositeResourceName `
-    -TestType Integration -Verbose
+    -TestType Integration
 #endregion
 
 # Using try/finally to always cleanup even if something awful happens.

@@ -2,9 +2,23 @@ function Get-PowerStigVersionFromManifest
 {
     [OutputType([version])]
     [CmdletBinding()]
-    param( )
+    param
+    (
+        [Parameter(Mandatory)]
+        [string]
+        $ManifestPath
+    )
 
-    Import-PowerShelldata  $releaseDir\$ModuleName.psd1
+    $requiredModules = (Import-PowerShellDataFile -Path $ManifestPath).RequiredModules
+    $powerStigSpecification = ($RequiredModules | Where {$PSItem.ModuleName -eq 'PowerStig'}).ModuleVersion
+    if(-not $powerStigSpecification )
+    {
+        throw "The PowerStig required version was not found in the manifest."
+    }
+    else
+    {
+        return $powerStigSpecification
+    }
 }
 
 function Get-RequiredStigDataVersion
@@ -209,6 +223,7 @@ function Get-ValidStigVersionNumbers
 }
 
 Export-ModuleMember -Function @(
+    'Get-PowerStigVersionFromManifest',
     'Get-StigVersionTable',
     'Get-ConfigurationName',
     'Get-StigVersionParameterValidateSet',
