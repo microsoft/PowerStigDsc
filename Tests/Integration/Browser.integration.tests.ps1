@@ -27,6 +27,10 @@ try
 
     $stigList = Get-StigVersionTable -CompositeResourceName $script:DSCCompositeResourceName
 
+    Get-Module -ListAvailable -FullyQualifiedName PowerStigDsc
+
+    Write-Verbose $env:PSModulePath -Verbose
+
     #region Integration Tests
     Foreach ($stig in $stigList)
     {
@@ -44,14 +48,14 @@ try
             [xml] $dscXml = Get-Content -Path $stig.Path
 
             $ConfigurationDocumentPath = "$TestDrive\localhost.mof"
-
             $instances = [Microsoft.PowerShell.DesiredStateConfiguration.Internal.DscClassCache]::ImportInstances($ConfigurationDocumentPath, 4)
+
             Context 'Registry' {
                 $hasAllSettings = $true
-                $dscXml   = $dscXml.DISASTIG.RegistryRule.Rule
-                $dscMof   = $instances |
+                $dscXml = $dscXml.DISASTIG.RegistryRule.Rule
+                $dscMof = $instances |
                     Where-Object {$PSItem.ResourceID -match "\[Registry\]"}
-    #Make Rule Key Filter here.
+                
                 Foreach ( $setting in $dscXml )
                 {
                     If (-not ($dscMof.ResourceID -match $setting.Id) )
@@ -65,7 +69,6 @@ try
                     $hasAllSettings | Should Be $true
                 }
             }
-
         }
     }
     #endregion Tests
