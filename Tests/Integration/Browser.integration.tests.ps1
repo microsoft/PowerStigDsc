@@ -15,7 +15,7 @@ Import-Module (Join-Path -Path $script:moduleRoot -ChildPath 'DSCResource.Tests\
 $TestEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $script:DSCModuleName `
     -DSCResourceName $script:DSCCompositeResourceName `
-    -TestType Integration -verbose
+    -TestType Integration
 #endregion
 
 # Using try/finally to always cleanup even if something awful happens.
@@ -26,10 +26,6 @@ try
     . $ConfigFile
 
     $stigList = Get-StigVersionTable -CompositeResourceName $script:DSCCompositeResourceName
-
-    Get-Module -ListAvailable -FullyQualifiedName PowerStigDsc
-
-    Write-Verbose $env:PSModulePath -Verbose
 
     #region Integration Tests
     Foreach ($stig in $stigList)
@@ -55,7 +51,7 @@ try
                 $dscXml = $dscXml.DISASTIG.RegistryRule.Rule
                 $dscMof = $instances |
                     Where-Object {$PSItem.ResourceID -match "\[Registry\]"}
-                
+
                 Foreach ( $setting in $dscXml )
                 {
                     If (-not ($dscMof.ResourceID -match $setting.Id) )

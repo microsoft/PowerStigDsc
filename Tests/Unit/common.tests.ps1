@@ -16,7 +16,6 @@ Describe 'Common Tests - Configuration Module Requirements' {
             {Microsoft.PowerShell.Core\Test-ModuleManifest -Path "$script:moduleRoot\$moduleName.psd1" } |
             Should Not Throw
         }
-
         It 'Contains a module manifest that aligns to the folder and module names' {
             $Files.Name.Contains("$moduleName.psd1") | Should Be True
         }
@@ -66,25 +65,52 @@ Describe 'Common Tests - Configuration Module Requirements' {
             {
                 if ($RequiredModule.GetType().Name -eq 'Hashtable')
                 {
-                    It "$($RequiredModule.ModuleName) version $($RequiredModule.ModuleVersion) should be found in the PowerShell public gallery" {
-                        {Find-Module -Name $RequiredModule.ModuleName -RequiredVersion $RequiredModule.ModuleVersion -Repository 'PsGallery' } | Should Not BeNullOrEmpty
+                    $discoveredModule = Find-Module -Name $RequiredModule.ModuleName -RequiredVersion $RequiredModule.ModuleVersion -Repository 'PsGallery'
+
+                    It "Should find $($RequiredModule.ModuleName) : $($RequiredModule.ModuleVersion) in the PowerShell public gallery" {
+                        $discoveredModule.Name    | Should Be $RequiredModule.ModuleName
+                        $discoveredModule.Version | Should Be $RequiredModule.ModuleVersion
                     }
-                    # It "$($RequiredModule.ModuleName) version $($RequiredModule.ModuleVersion) should install locally without error" {
-                    #     {Install-Module -Name $RequiredModule.ModuleName -RequiredVersion $RequiredModule.ModuleVersion -Scope CurrentUser -Force -Repository 'PsGallery' } | Should Not Throw
-                    # }
                 }
                 else
                 {
-                    It "$RequiredModule should be found in the PowerShell public gallery" {
-                        {Find-Module -Name $RequiredModule -Repository 'PsGallery' } | Should Not BeNullOrEmpty
+                    It "Should find $RequiredModule in the PowerShell public gallery" {
+                        (Find-Module -Name $RequiredModule -Repository 'PsGallery').Name | Should Be $RequiredModule
                     }
-                    # It "$RequiredModule should install locally without error" {
-                    #     {Install-Module -Name $RequiredModule -Scope CurrentUser -Force -Repository 'PsGallery' } | Should Not Throw
-                    # }
+                }
+            }
+
+            It 'Should require the most recent PowerStig version' {
+
+                [version] $manifestPowerStigVersion = Get-PowerStigVersionFromManifest -ManifestPath "$($script:moduleRoot)\$($moduleName).psd1"
+                [version] $galleryPowerStigVersion  = (Find-Module -Name PowerStig -Repository PSGallery).Version
+
+                $manifestPowerStigVersion | Should Be $galleryPowerStigVersion
+            }
+        }
+    }
+
+    Context 'Composite Resources' {
+
+        [System.Collections.ArrayList] $manifestDscResourceList = $Manifest.DscResourcesToExport
+
+        [System.Collections.ArrayList] $moduleDscResourceList = Get-ChildItem -Path "$($script:moduleRoot)\DscResources" -Directory -Exclude 'common' |
+                            Select-Object -Property BaseName -ExpandProperty BaseName
+
+        It 'Should have all module resources listed in the manifest' {
+            $manifestDscResourceList | Should Be $moduleDscResourceList
+        }
+
+        Foreach ($resource in $moduleDscResourceList)
+        {
+            Context "$resource Composite Resource" {
+
+                It "Should have a $resource Composite Resource" {
+                    $manifestDscResourceList.Where( {$PSItem -eq $resource}) | Should Not BeNullOrEmpty
+
                 }
             }
         }
     }
 }
-
 #endregion Tests

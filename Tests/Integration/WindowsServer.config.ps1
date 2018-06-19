@@ -20,20 +20,38 @@ Configuration WindowsServer_config
 
         [Parameter(Mandatory = $true)]
         [string]
-        $DomainName
+        $DomainName,
+
+        [Parameter(Mandatory = $false)]
+        [psobject]
+        $SkipRule,
+
+        [Parameter(Mandatory = $false)]
+        [psobject]
+        $SkipRuleType
     )
 
     Import-DscResource -ModuleName PowerStigDsc
 
     Node localhost
     {
-        WindowsServer BaseLineSettings
-        {
-            OsVersion   = $OsVersion
-            OsRole      = $OsRole
-            StigVersion = $StigVersion
-            ForestName  = $ForestName
-            DomainName  = $DomainName
-        }
+        & ([scriptblock]::Create("
+            WindowsServer BaseLineSettings
+            {
+                OsVersion    = '$OsVersion'
+                OsRole       = '$OsRole'
+                StigVersion  = '$StigVersion'
+                ForestName   = '$ForestName'
+                DomainName   = '$DomainName'
+                $(if($SkipRule)
+                {
+                    "SkipRule = '$SkipRule'`n"
+                }
+                if ($SkipRuleType)
+                {
+                    "SkipRuleType = '$SkipRuleType'`n"
+                })
+            }")
+        )
     }
 }
