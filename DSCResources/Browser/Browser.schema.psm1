@@ -31,20 +31,6 @@ using module PowerStig
     .PARAMETER SkipRuleType
         All STIG rule IDs of the specified type are collected in an array and passed to the Skip-Rule
         function. Each rule follows the same process as the SkipRule parameter.
-
-    .EXAMPLE
-        In this example the latest version of the Windows firewall STIG is applied.
-
-        Import-DscResource -ModuleName PowerStigDsc
-
-        Node localhost
-        {
-            WindowsDnsServer DnsSettings
-            {
-                OsVersion   = '2012R2'
-                StigVersion = '1.7'
-            }
-        }
 #>
 Configuration Browser
 {
