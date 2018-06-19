@@ -43,15 +43,20 @@ Configuration WindowsServer_config
                 StigVersion  = '$StigVersion'
                 ForestName   = '$ForestName'
                 DomainName   = '$DomainName'
-                $(if($SkipRule)
+                $(if($null -ne $SkipRule)
                 {
-                    "SkipRule = '$SkipRule'`n"
+                    "SkipRule = @($( ($SkipRule | % {"'$_'"}) -join ',' ))`n"
                 }
-                if ($SkipRuleType)
+                if ($null -ne $SkipRuleType)
                 {
-                    "SkipRuleType = '$SkipRuleType'`n"
+                    " SkipRuleType = @($( ($SkipRuleType | % {"'$_'"}) -join ',' ))`n"
                 })
             }")
         )
+
+        <#
+            This is a little hacky becasue the scriptblock "flattens" the array of rules to skip.
+            This just rebuilds the array text in the scriptblock.
+        #>
     }
 }

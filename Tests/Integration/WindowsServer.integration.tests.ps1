@@ -30,6 +30,8 @@ try
     #region Integration Tests
     Foreach ($stig in $stigList)
     {
+        [xml] $dscXml = Get-Content -Path $stig.Path
+
         Describe "Windows $($stig.TechnologyVersion) $($stig.TechnologyRole) $($stig.StigVersion) mof output" {
 
             It 'Should compile the MOF without throwing' {
@@ -43,8 +45,6 @@ try
                         -OutputPath $TestDrive
                 } | Should not throw
             }
-
-            [xml] $dscXml = Get-Content -Path $stig.Path
 
             $ConfigurationDocumentPath = "$TestDrive\localhost.mof"
 
@@ -234,9 +234,7 @@ try
 
         Describe "Windows $($stig.TechnologyVersion) $($stig.TechnologyRole) $($stig.StigVersion) Single SkipRule/RuleType mof output" {
 
-            [xml] $dscXml = Get-Content -Path $stig.Path
-            $RegistryIds  = $dscXml.DISASTIG.RegistryRule.Rule.id
-            $SkipRule     = Get-Random -InputObject $RegistryIds
+            $skipRule     = Get-Random -InputObject $dscXml.DISASTIG.RegistryRule.Rule.id
             $skipRuleType = "AuditPolicyRule"
 
             It 'Should compile the MOF without throwing' {
@@ -275,27 +273,8 @@ try
 
         Describe "Windows $($stig.TechnologyVersion) $($stig.TechnologyRole) $($stig.StigVersion) Multiple SkipRule/RuleType mof output" {
 
-            [xml] $dscXml = Get-Content -Path $stig.Path
-            $RegistryIds = $dscXml.DISASTIG.RegistryRule.Rule.id
-            $skipRule = @()
-            $skipCount = 2
-
-            # Gets a set of random rule Id's
-            while ($skipRule.Count -le $skipCount)
-            {
-                $skipToAdd = Get-Random -InputObject $RegistryIds
-
-                if ($skipToAdd -contains $skiprule)
-                {
-                    $null
-                }
-                else
-                {
-                    $skiprule += $skipToAdd
-                }
-            }
-
-            $skipRuleType = @("AuditPolicyRule", "AccountPolicyRule")
+            $skipRule     = Get-Random -InputObject $dscXml.DISASTIG.RegistryRule.Rule.id -Count 2
+            $skipRuleType = @('AuditPolicyRule','AccountPolicyRule')
 
             It 'Should compile the MOF without throwing' {
                 {
