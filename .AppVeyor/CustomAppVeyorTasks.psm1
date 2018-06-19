@@ -1,4 +1,4 @@
-﻿function Invoke-CustomAppveyorInstallTask
+function Invoke-CustomAppveyorInstallTask
 {
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     param ()
