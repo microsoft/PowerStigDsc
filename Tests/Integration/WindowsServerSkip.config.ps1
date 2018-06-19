@@ -40,8 +40,8 @@ Configuration WindowsServerSkip_config
             OsVersion    = $OsVersion
             OsRole       = $OsRole
             StigVersion  = $StigVersion
-            ForestName  = $ForestName
-            DomainName  = $DomainName
+            ForestName   = $ForestName
+            DomainName   = $DomainName
             SkipRule     = $SkipRule
             SkipRuleType = $SkipRuleType
         }
