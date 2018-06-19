@@ -28,4 +28,4 @@ function Start-CustomAppveyorAfterTestTask
     Write-Info -Message 'Custom After Test Task Complete.'
 }
 
-Export-ModuleMember -Function
+Export-ModuleMember -Function *-CustomAppveyor*
