@@ -72,8 +72,15 @@ try
 
             Context 'Permissions' {
                 $hasAllSettings = $true
+                <#
+                    https://github.com/Microsoft/PowerStigDsc/issues/1
+                    Once the Composite is updated to configure ActiveDirectoryAuditRuleEntry,
+                    remove '-and $PSItem.dscResource -ne "ActiveDirectoryAuditRuleEntry"' from the
+                    following where cmdlet
+                #>
                 $dscXmlPermissionPolicy = $dscXml.DISASTIG.PermissionRule.Rule |
-                    Where-Object {$PSItem.conversionstatus -eq "pass"}
+                    Where-Object { $PSItem.conversionstatus -eq "pass" -and
+                                   $PSItem.dscResource -ne "ActiveDirectoryAuditRuleEntry"}
                 $dscMofPermissionPolicy = $instances |
                     Where-Object {$PSItem.ResourceID -match "\[NTFSAccessEntry\]|\[RegistryAccessEntry\]"}
 
