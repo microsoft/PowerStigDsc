@@ -141,19 +141,23 @@ Configuration WindowsServer
                                           $skipRuleTypeObject, $skipRuleObject )
 
     $StigData = $StigDataObject.StigXml
-
     # $resourcePath is exported from the helper module in the header
+
     Import-DscResource -ModuleName AuditPolicyDsc
     . "$resourcePath\windows.AuditPolicySubcategory.ps1"
+
     Import-DscResource -ModuleName AccessControlDsc
     . "$resourcePath\windows.AccessControl.ps1"
+
     Import-DscResource -ModuleName PSDesiredStateConfiguration
     . "$resourcePath\windows.Registry.ps1"
     . "$resourcePath\windows.Script.wmi.ps1"
     . "$resourcePath\windows.Script.skip.ps1"
     . "$resourcePath\windows.WindowsFeature.ps1"
+
     Import-DscResource -ModuleName xPSDesiredStateConfiguration
     . "$resourcePath\windows.xService.ps1"
+
     Import-DscResource -ModuleName SecurityPolicyDsc
     . "$resourcePath\windows.AccountPolicy.ps1"
     . "$resourcePath\windows.UserRightsAssignment.ps1"

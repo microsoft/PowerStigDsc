@@ -131,6 +131,7 @@ Configuration WindowsDnsServer
                                           $skipRuleTypeObject, $skipRuleObject )
 
     $stigData = $stigDataObject.StigXml
+    # $resourcePath is exported from the helper module in the header
 
     Import-DscResource -ModuleName xDnsServer
     . "$resourcePath\windows.xDnsServerSetting.ps1"

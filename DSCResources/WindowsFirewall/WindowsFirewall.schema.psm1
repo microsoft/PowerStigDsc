@@ -105,8 +105,8 @@ Configuration WindowsFirewall
                                           $skipRuleTypeObject, $skipRuleObject )
 
     $StigData = $StigDataObject.StigXml
+    # $resourcePath is exported from the helper module in the header
 
-        # $resourcePath is exported from the helper module in the header
-        Import-DscResource -ModuleName PSDesiredStateConfiguration
-        . "$resourcePath\windows.Registry.ps1"
-    }
+    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    . "$resourcePath\windows.Registry.ps1"
+}

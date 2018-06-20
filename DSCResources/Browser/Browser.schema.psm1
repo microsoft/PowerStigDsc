@@ -104,16 +104,16 @@ Configuration Browser
     }
     #endregion
 
-    $technology = [Technology]::New( "Windows" )
+    $technology        = [Technology]::New( "Windows" )
     $technologyVersion = [TechnologyVersion]::New( 'All', $technology )
-    $technologyRole = [TechnologyRole]::New( $BrowserVersion, $technologyVersion )
-    $StigDataObject = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
+    $technologyRole    = [TechnologyRole]::New( $BrowserVersion, $technologyVersion )
+    $StigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
                                        $technologyRole, $technologyVersion, $exceptionsObject,
                                        $skipRuleTypeObject, $skipRuleObject )
 
     $StigData = $StigDataObject.StigXml
+    # $resourcePath is exported from the helper module in the header
 
     Import-DscResource -ModuleName PSDesiredStateConfiguration
     . "$resourcePath\windows.Registry.ps1"
-
 }

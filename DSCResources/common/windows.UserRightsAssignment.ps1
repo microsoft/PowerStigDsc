@@ -29,7 +29,7 @@ $domainName = PowerStig\Get-DomainName -DomainName $DomainName -Format NetbiosNa
 $forestName = PowerStig\Get-DomainName -ForestName $ForestName -Format NetbiosName
 
 #endregion Header
-#region Resource
+
 Foreach ( $rule in $rules )
 {
     Write-Verbose $rule
@@ -59,4 +59,3 @@ Foreach ( $rule in $rules )
         Identity = $IdentityList
     }
 }
-#endregion Resource
