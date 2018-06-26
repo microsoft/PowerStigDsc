@@ -1,28 +1,30 @@
 #region Header
-[string] $script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$moduleName = 'PowerStigDsc'
-Import-Module "$script:moduleRoot\tests\helper.psm1" -Force
 
-#region Tests
+$script:DSCModuleName            = 'PowerStigDsc'
+$script:DSCCompositeResourceName = 'WindowsServer'
+
+#region HEADER
+$script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+Import-Module (Join-Path -Path $moduleRoot -ChildPath 'Tests\helper.psm1') -Force
 
 Describe 'Common Tests - Configuration Module Requirements' {
 
     $Files = Get-ChildItem -Path $script:moduleRoot
-    $Manifest = Import-PowerShellDataFile -Path "$script:moduleRoot\$moduleName.psd1"
+    $Manifest = Import-PowerShellDataFile -Path "$script:moduleRoot\$script:DSCModuleName.psd1"
 
-    Context "$moduleName module manifest properties" {
+    Context "$script:DSCModuleName module manifest properties" {
 
         It 'Should be a valid Manifest' {
-            {Microsoft.PowerShell.Core\Test-ModuleManifest -Path "$script:moduleRoot\$moduleName.psd1" } |
+            {Microsoft.PowerShell.Core\Test-ModuleManifest -Path "$script:moduleRoot\$script:DSCModuleName.psd1" } |
             Should Not Throw
         }
         It 'Contains a module manifest that aligns to the folder and module names' {
-            $Files.Name.Contains("$moduleName.psd1") | Should Be True
+            $Files.Name.Contains("$script:DSCModuleName.psd1") | Should Be True
         }
         It 'Contains a readme' {
             Test-Path "$($script:moduleRoot)\README.md" | Should Be True
         }
-        It "Manifest $moduleName.psd1 should import as a data file" {
+        It "Manifest $script:DSCModuleName.psd1 should import as a data file" {
             $Manifest | Should BeOfType 'Hashtable'
         }
         It 'Should have a GUID in the manifest' {
@@ -59,7 +61,7 @@ Describe 'Common Tests - Configuration Module Requirements' {
 
     if ($Manifest.RequiredModules)
     {
-        Context "$moduleName required modules" {
+        Context "$script:DSCModuleName required modules" {
 
             ForEach ($RequiredModule in $Manifest.RequiredModules)
             {
@@ -82,7 +84,7 @@ Describe 'Common Tests - Configuration Module Requirements' {
 
             It 'Should require the most recent PowerStig version' {
 
-                [version] $manifestPowerStigVersion = Get-PowerStigVersionFromManifest -ManifestPath "$($script:moduleRoot)\$($moduleName).psd1"
+                [version] $manifestPowerStigVersion = Get-PowerStigVersionFromManifest -ManifestPath "$($script:moduleRoot)\$($script:DSCModuleName).psd1"
                 [version] $galleryPowerStigVersion  = (Find-Module -Name PowerStig -Repository PSGallery).Version
 
                 $manifestPowerStigVersion | Should Be $galleryPowerStigVersion
