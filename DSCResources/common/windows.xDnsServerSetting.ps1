@@ -5,11 +5,13 @@ $rules = Get-RuleClassData -StigData $StigData -Name DnsServerSettingRule
 
 Foreach ( $rule in $rules )
 {
-    & ([scriptblock]::Create("
+    $scriptblock = ([scriptblock]::Create("
         xDnsServerSetting  '$(Get-ResourceTitle -Rule $rule)'
         {
             Name = '$($rule.PropertyName)'
             $($rule.PropertyName)  = $($rule.PropertyValue)
         }")
     )
+
+    $scriptblock.Invoke()
 }

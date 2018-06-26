@@ -7,11 +7,13 @@ Foreach ( $rule in $rules )
 {
     $policy = $rule.OptionName -replace "(\/)|(:)*\s", "_"
 
-    & ([scriptblock]::Create("
+    $scriptblock = ([scriptblock]::Create("
         SecurityOption  '$(Get-ResourceTitle -Rule $rule)'
         {
             Name = '$policy'
             $policy = '$($rule.OptionValue)'
         }")
     )
+
+    $scriptblock.Invoke()
 }

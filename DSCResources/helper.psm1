@@ -15,9 +15,11 @@
 #>
 function Get-ResourceTitle
 {
+    [CmdletBinding()]
+    [OutputType([string])]
     param
     (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [System.Xml.XmlElement]
         $Rule
     )
@@ -37,13 +39,15 @@ function Get-ResourceTitle
 #>
 function Get-RuleClassData
 {
+    [CmdletBinding()]
+    [OutputType([xml])]
     param
     (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $Name,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [xml]
         $StigData
     )

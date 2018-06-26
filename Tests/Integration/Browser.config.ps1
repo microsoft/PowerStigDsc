@@ -6,7 +6,7 @@ Configuration Browser_config
         [string]
         $BrowserVersion,
 
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [string]
         $StigVersion
     )

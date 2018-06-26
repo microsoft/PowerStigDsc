@@ -22,11 +22,11 @@ Configuration WindowsServer_config
         [string]
         $DomainName,
 
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [psobject]
         $SkipRule,
 
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [psobject]
         $SkipRuleType
     )

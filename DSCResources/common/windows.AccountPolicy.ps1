@@ -7,7 +7,7 @@ Foreach ( $rule in $rules )
 {
     $policy = $rule.PolicyName -replace "(:)*\s","_"
 
-    $sb = [scriptblock]::Create("
+    $scriptblock = [scriptblock]::Create("
         AccountPolicy '$(Get-ResourceTitle -Rule $rule)'
         {
             Name = '$policy'
@@ -15,5 +15,5 @@ Foreach ( $rule in $rules )
         }"
     )
 
-    & $sb
+    $scriptblock.Invoke()
 }
