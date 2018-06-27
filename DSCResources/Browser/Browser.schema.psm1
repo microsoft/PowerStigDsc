@@ -114,6 +114,6 @@ Configuration Browser
     $StigData = $StigDataObject.StigXml
     # $resourcePath is exported from the helper module in the header
 
-    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Import-DscResource -ModuleName PSDesiredStateConfiguration -ModuleVersion 1.1
     . "$resourcePath\windows.Registry.ps1"
 }
