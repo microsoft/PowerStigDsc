@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 
 using module ..\helper.psm1
-using module PowerStig
+Import-Module -Name PowerSTIG
 
 <#
     .SYNOPSIS
