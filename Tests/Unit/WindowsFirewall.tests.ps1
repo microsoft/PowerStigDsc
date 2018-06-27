@@ -1,18 +1,34 @@
-<#
-    The common unit tests will discover all of the resources using Get-ChildItem on the DscResources
-    directory and loop through all of the discovered compsite resources to test and validate the
-    core resource functionality. Individual test files are needed to verify that specifc resources
-    exist and contain any testing that is specific to that resoruce.
-#>
 
-$compositeRoot = ( Split-Path -Path $MyInvocation.MyCommand.Path -Parent) -replace '\\tests\\unit\\','\src\'
-$compositeName = ($MyInvocation.MyCommand.Name -split "\.")[0]
+$script:DSCModuleName            = 'PowerStigDsc'
+$script:DSCCompositeResourceName = 'WindowsFirewall'
 
-$compositeManifestPath = "$compositeRoot\$compositeName\$compositeName.psd1"
-$compositeSchemaPath = "$compositeRoot\$compositeName\$compositeName.schema.psm1"
+#region HEADER
+$script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+Import-Module (Join-Path -Path $moduleRoot -ChildPath 'Tests\helper.psm1') -Force
 
-##########################################     Header     ##########################################
+$compositeManifestPath = "$($script:moduleRoot)\DscResources\$script:DSCCompositeResourceName\$script:DSCCompositeResourceName.psd1"
+$compositeSchemaPath   = "$($script:moduleRoot)\DscResources\$script:DSCCompositeResourceName\$script:DSCCompositeResourceName.schema.psm1"
+#endregion
 
-Describe "$compositeName Composite resource" {
+Describe "$($script:DSCCompositeResourceName) Composite resource" {
 
+    It 'Should be a valid manifest' {
+        {Test-ModuleManifest -Path $compositeManifestPath} | Should Not Throw
+    }
+
+    It 'Should contain a schema module' {
+        Test-Path -Path $compositeSchemaPath | Should Be $true
+    }
+
+    It 'Should contain a correctly named configuration' {
+        $configurationName = Get-ConfigurationName -FilePath $compositeSchemaPath
+        $configurationName | Should Be $script:DSCCompositeResourceName
+    }
+
+    It "Should match ValidateSet from PowerStig" {
+        $validateSet = Get-StigVersionParameterValidateSet -FilePath $compositeSchemaPath
+        $powerStigVersion = Get-PowerStigVersionFromManifest -ManifestPath "$($script:moduleRoot)\$($script:DSCModuleName).psd1"
+        $availableStigVersions = Get-ValidStigVersionNumbers -CompositeResourceName $script:DSCCompositeResourceName -ModuleVersion $powerStigVersion
+        $validateSet | Should BeIn $availableStigVersions
+    }
 }

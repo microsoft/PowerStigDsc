@@ -1,6 +1,6 @@
 
 $script:DSCModuleName            = 'PowerStigDsc'
-$script:DSCCompositeResourceName = 'WindowsServer'
+$script:DSCCompositeResourceName = 'Browser'
 
 #region HEADER
 $script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
@@ -29,6 +29,7 @@ Describe "$($script:DSCCompositeResourceName) Composite resource" {
         $validateSet = Get-StigVersionParameterValidateSet -FilePath $compositeSchemaPath
         $powerStigVersion = Get-PowerStigVersionFromManifest -ManifestPath "$($script:moduleRoot)\$($script:DSCModuleName).psd1"
         $availableStigVersions = Get-ValidStigVersionNumbers -CompositeResourceName $script:DSCCompositeResourceName -ModuleVersion $powerStigVersion
+
         $validateSet | Should BeIn $availableStigVersions
     }
 }

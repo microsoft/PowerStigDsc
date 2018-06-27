@@ -1,4 +1,4 @@
-﻿<#
+<#
     Use embedded STIG data and skip an entire rule set.
     In this example, the Windows DNS Server 2012 R2 V1 R7 STIG is processed by the composite
     resource and merges in the default values for any settings that have a valid range.
@@ -6,7 +6,7 @@
     STIG ID's with the type 'AuditPolicyRule' would be marked to skip configuration when applied.
 #>
 
-configuration Sample_WindowsDnsServer_SkipRuleType
+configuration Example
 {
     param
     (
@@ -23,9 +23,11 @@ configuration Sample_WindowsDnsServer_SkipRuleType
         {
             OsVersion    = '2012R2'
             StigVersion  = '1.7'
-            SkipRuleType = 'AuditPolicyRule'
+            DomainName   = 'integation.test'
+            ForestName   = 'integation.test'
+            SkipRuleType = 'UserRightRule'
         }
     }
 }
 
-Sample_WindowsDnsServer_SkipRuleType
+Example

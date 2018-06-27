@@ -1,10 +1,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-#region Header
+
 $rules = Get-RuleClassData -StigData $StigData -Name WmiRule
-#endregion Header
-#region Resource
+
 Foreach ( $rule in $rules )
 {
     Script (Get-ResourceTitle -Rule $rule)
@@ -12,26 +11,26 @@ Foreach ( $rule in $rules )
         # Must return a hashtable with at least one key named 'Result' of type String
         GetScript = {
             Return @{
-                'Result' = [string] $( ( Get-WmiObject -Class $Using:rule.Class ).$( $Using:rule.Property ) )
+                'Result' = [string] $( ( Get-WmiObject -Query $using:rule.Query ).$( $using:rule.Property ) )
             }
         }
 
         # Must return a boolean: $true or $false
         TestScript = {
-            $valueToTest = ( ( Get-WmiObject -Class $Using:rule.Class ).$( $Using:rule.Property ) )
+            $valueToTest = ( ( Get-WmiObject -Query $using:rule.Query ).$( $using:rule.Property ) )
 
             ForEach ( $value in $valueToTest )
             {
-                $wmiTest = [scriptBlock]::create("""$value"" $($Using:rule.Operator) ""$($Using:rule.Value)""")
+                $wmiTest = [scriptBlock]::create("""$value"" $($using:rule.Operator) ""$($using:rule.Value)""")
 
                 if ( -not ( & $wmiTest ) )
                 {
-                    Write-Verbose "$($Using:rule.Property) -not $($Using:rule.Operator) $($Using:rule.Value)"
+                    Write-Verbose "$($using:rule.Property) -not $($using:rule.Operator) $($using:rule.Value)"
                     return $false
                 }
             }
 
-            Write-Verbose "$($Using:rule.Property) $($Using:rule.Operator) $($Using:rule.Value)"
+            Write-Verbose "$($using:rule.Property) $($using:rule.Operator) $($using:rule.Value)"
             return $true
         }
 
@@ -42,4 +41,3 @@ Foreach ( $rule in $rules )
         SetScript = { }
     }
 }
-#endregion Resource

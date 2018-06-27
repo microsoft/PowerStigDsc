@@ -1,6 +1,6 @@
-$compositeRoot = ( Split-Path -Path $MyInvocation.MyCommand.Path -Parent) -replace '\\tests\\unit\\','\src\'
+[String] $script:moduleRoot = Split-Path -Parent ( Split-Path -Parent $PSScriptRoot )
 
-Import-Module $compositeRoot\helper.psm1
+Import-Module -Name ( Join-Path -Path $moduleRoot -ChildPath 'DscResources\helper.psm1' )
 
 Describe "Variables" {
 

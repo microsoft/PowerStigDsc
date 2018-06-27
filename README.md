@@ -1,8 +1,8 @@
-﻿# PowerStigDsc
+# PowerStigDsc
 
-master: [![Build status](https://ci.appveyor.com/api/projects/)](https://ci.appveyor.com/project/)
+master: [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/master?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/master?svg=true)
 
-dev: [![Build status](https://ci.appveyor.com/api/projects/)](https://ci.appveyor.com/project/)
+dev: [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true)
 
 **PowerStigDsc** is a Windows PowerShell Desired State Configuration (DSC) composite resource to manage the configurable items of the DISA STIG's.
 This is accomplished by using Microsoft supported OSS DSC Resources from the PowerShell gallery which that are specialized to a specific area of the STIG.
@@ -15,6 +15,7 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
 or comments.
 
 ## Contributing
+
 Please check out common DSC Resources [contributing guidelines](
   https://github.com/PowerShell/DscResources/blob/master/CONTRIBUTING.md).
 
@@ -139,8 +140,14 @@ None
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_SkipRule.ps1)
 * [Apply the Windows Server STIG to a node, but skip the AuditPolicyRules](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_SkipRuleType.ps1)
+
 ## Versions
 
 ### Unreleased
 
 ### 1.0.0.0
+
+* Browser Composite
+* Windows DNS Server Composite
+* Windows Firewall Composite
+* Windows Server Composite

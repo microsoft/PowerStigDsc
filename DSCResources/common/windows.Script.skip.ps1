@@ -1,10 +1,8 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-#region Header
 $rules = Get-RuleClassData -StigData $StigData -Name SkipRule
-#endregion Header
-#region Resource
+
 Foreach ( $rule in $rules )
 {
     Script (Get-ResourceTitle -Rule $rule)
@@ -31,4 +29,3 @@ Foreach ( $rule in $rules )
         SetScript = { }
     }
 }
-#endregion Resource

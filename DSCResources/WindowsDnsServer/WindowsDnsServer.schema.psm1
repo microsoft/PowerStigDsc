@@ -1,8 +1,9 @@
-#region Header
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 using module ..\helper.psm1
 using module PowerStig
-#endregion Header
-#region Composite
+
 <#
     .SYNOPSIS
         A composite DSC resource to manage the Windows Server DNS STIG settings
@@ -38,20 +39,6 @@ using module PowerStig
     .PARAMETER SkipRuleType
         All STIG rule IDs of the specified type are collected in an array and passed to the Skip-Rule
         function. Each rule follows the same process as the SkipRule parameter.
-
-    .EXAMPLE
-        In this example the latest version of the Windows firewall STIG is applied.
-
-        Import-DscResource -ModuleName PowerStigDsc
-
-        Node localhost
-        {
-            WindowsDnsServer DnsSettings
-            {
-                OsVersion   = '2012R2'
-                StigVersion = '1.7'
-            }
-        }
 #>
 Configuration WindowsDnsServer
 {
@@ -139,9 +126,13 @@ Configuration WindowsDnsServer
     $technology        = [Technology]::New( "Windows" )
     $technologyVersion = [TechnologyVersion]::New( $OsVersion, $technology )
     $technologyRole    = [TechnologyRole]::New( "DNS", $technologyVersion )
-    $stigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology, $technologyRole, $technologyVersion, $exceptionsObject , $skipRuleTypeObject, $skipRuleObject )
+    $stigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
+                                          $technologyRole, $technologyVersion, $exceptionsObject,
+                                          $skipRuleTypeObject, $skipRuleObject )
 
     $stigData = $stigDataObject.StigXml
+    # $resourcePath is exported from the helper module in the header
+
     Import-DscResource -ModuleName xDnsServer
     . "$resourcePath\windows.xDnsServerSetting.ps1"
 
@@ -158,4 +149,3 @@ Configuration WindowsDnsServer
     Import-DscResource -ModuleName xWinEventLog
     . "$resourcePath\windows.xWinEventLog.ps1"
 }
-#endregion Composite

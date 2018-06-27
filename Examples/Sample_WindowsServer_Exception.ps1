@@ -1,4 +1,4 @@
-﻿<#
+<#
     Use embedded STIG data and inject exception data.
     In this example, the Windows Server 2012R2 V2 R8 domain controller STIG is
     processed by the composite resource and merges in the default values for any
@@ -7,7 +7,7 @@
     written with the value 1.
 #>
 
-configuration Sample_WindowsServer_Exception
+configuration Example
 {
     param
     (
@@ -23,11 +23,13 @@ configuration Sample_WindowsServer_Exception
         WindowsServer BaseLine
         {
             OsVersion   = '2012R2'
-            OsRole      = 'DomainController'
-            StigVersion = '2.8'
-            Exception   = @{'V-1000'='1'}
+            OsRole      = 'MS'
+            StigVersion = '2.12'
+            DomainName  = 'sample.test'
+            ForestName  = 'sample.test'
+            Exception   = @{'V-1075'= @{'ValueData'='1'} }
         }
     }
 }
 
-Sample_WindowsServer_Exception
+Example

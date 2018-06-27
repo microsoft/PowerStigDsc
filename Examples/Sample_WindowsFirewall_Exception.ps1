@@ -1,4 +1,4 @@
-﻿<#
+<#
     Use embedded STIG data and inject exception data.
     In this example, the Windows Firewall V1 R6 STIG is processed by the composite
     resource and merges in the default values for any settings that have a valid range.
@@ -6,7 +6,7 @@
     in STIG ID V-1000 would be over written with the value 1.
 #>
 
-configuration Sample_WindowsFirewall_Exception
+configuration Example
 {
     param
     (
@@ -22,9 +22,9 @@ configuration Sample_WindowsFirewall_Exception
         WindowsFirewall Sample_WindowsFirewall_Exception
         {
             StigVersion = '1.6'
-            Exception   = @{'V-1000'='1'}
+            Exception   = @{'V-17415.a'= @{'ValueData'='0'}}
         }
     }
 }
 
-Sample_WindowsFirewall_Exception
+Example

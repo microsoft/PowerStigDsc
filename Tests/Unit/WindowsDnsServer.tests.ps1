@@ -1,6 +1,6 @@
 
 $script:DSCModuleName            = 'PowerStigDsc'
-$script:DSCCompositeResourceName = 'WindowsServer'
+$script:DSCCompositeResourceName = 'WindowsDnsServer'
 
 #region HEADER
 $script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)

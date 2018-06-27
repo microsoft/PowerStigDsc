@@ -1,6 +1,6 @@
 Configuration WindowsServer_config
 {
-    param 
+    param
     (
         [Parameter(Mandatory = $true)]
         [string]
@@ -12,18 +12,51 @@ Configuration WindowsServer_config
 
         [Parameter(Mandatory = $true)]
         [version]
-        $StigVersion
+        $StigVersion,
+
+        [Parameter(Mandatory = $true)]
+        [string]
+        $ForestName,
+
+        [Parameter(Mandatory = $true)]
+        [string]
+        $DomainName,
+
+        [Parameter()]
+        [psobject]
+        $SkipRule,
+
+        [Parameter()]
+        [psobject]
+        $SkipRuleType
     )
 
     Import-DscResource -ModuleName PowerStigDsc
 
     Node localhost
     {
-        WindowsServer BaseLineSettings
-        {
-            OsVersion   = $OsVersion
-            OsRole      = $OsRole
-            StigVersion = $StigVersion
-        } 
+        & ([scriptblock]::Create("
+            WindowsServer BaseLineSettings
+            {
+                OsVersion    = '$OsVersion'
+                OsRole       = '$OsRole'
+                StigVersion  = '$StigVersion'
+                ForestName   = '$ForestName'
+                DomainName   = '$DomainName'
+                $(if($null -ne $SkipRule)
+                {
+                    "SkipRule = @($( ($SkipRule | % {"'$_'"}) -join ',' ))`n"
+                }
+                if ($null -ne $SkipRuleType)
+                {
+                    " SkipRuleType = @($( ($SkipRuleType | % {"'$_'"}) -join ',' ))`n"
+                })
+            }")
+        )
+
+        <#
+            This is a little hacky becasue the scriptblock "flattens" the array of rules to skip.
+            This just rebuilds the array text in the scriptblock.
+        #>
     }
 }

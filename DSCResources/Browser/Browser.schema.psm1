@@ -1,11 +1,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-#region Header
 using module ..\helper.psm1
 using module PowerStig
-#endregion Header
-#region Composite
+
 <#
     .SYNOPSIS
         A composite DSC resource to manage the Browser STIG settings
@@ -33,21 +31,8 @@ using module PowerStig
     .PARAMETER SkipRuleType
         All STIG rule IDs of the specified type are collected in an array and passed to the Skip-Rule
         function. Each rule follows the same process as the SkipRule parameter.
-
-    .EXAMPLE
-        In this example the latest version of the Windows firewall STIG is applied.
-
-        Import-DscResource -ModuleName PowerStigDsc
-
-        Node localhost
-        {
-            WindowsDnsServer DnsSettings
-            {
-                OsVersion   = '2012R2'
-                StigVersion = '1.7'
-            }
-        }
-#>Configuration Browser
+#>
+Configuration Browser
 {
     [CmdletBinding()]
     Param
@@ -58,7 +43,7 @@ using module PowerStig
         $BrowserVersion,
 
         [Parameter()]
-        [ValidateSet('1.13')]
+        [ValidateSet('1.13','1.15')]
         [ValidateNotNullOrEmpty()]
         [version]
         $StigVersion,
@@ -82,44 +67,53 @@ using module PowerStig
     )
 
     #region Add required data to XML
-    if ( $Exception ) {
+    if ( $Exception )
+    {
         $exceptionsObject = [StigException]::ConvertFrom( $Exception )
     }
-    else {
+    else
+    {
         $exceptionsObject = $null
     }
 
-    if ( $SkipRule ) {
+    if ( $SkipRule )
+    {
         $skipRuleObject = [SkippedRule]::ConvertFrom( $SkipRule )
     }
-    else {
+    else
+    {
         $skipRuleObject = $null
     }
 
-    if ( $SkipRuleType ) {
+    if ( $SkipRuleType )
+    {
         $skipRuleTypeObject = [SkippedRuleType]::ConvertFrom( $SkipRuleType )
     }
-    else {
+    else
+    {
         $skipRuleTypeObject = $null
     }
 
-    if ( $OrgSettings ) {
+    if ( $OrgSettings )
+    {
         $orgSettingsObject = Get-OrgSettingsObject -OrgSettings $OrgSettings
     }
-    else {
+    else
+    {
         $orgSettingsObject = $null
     }
     #endregion
 
-    $technology = [Technology]::New( "Windows" )
+    $technology        = [Technology]::New( "Windows" )
     $technologyVersion = [TechnologyVersion]::New( 'All', $technology )
-    $technologyRole = [TechnologyRole]::New( $BrowserVersion, $technologyVersion )
-    $StigDataObject = [StigData]::New( $StigVersion, $orgSettingsObject, $technology, $technologyRole, $technologyVersion, $exceptionsObject , $skipRuleTypeObject, $skipRuleObject )
+    $technologyRole    = [TechnologyRole]::New( $BrowserVersion, $technologyVersion )
+    $StigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
+                                       $technologyRole, $technologyVersion, $exceptionsObject,
+                                       $skipRuleTypeObject, $skipRuleObject )
 
     $StigData = $StigDataObject.StigXml
+    # $resourcePath is exported from the helper module in the header
 
     Import-DscResource -ModuleName PSDesiredStateConfiguration
     . "$resourcePath\windows.Registry.ps1"
-
 }
-#endregion Composite

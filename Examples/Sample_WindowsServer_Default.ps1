@@ -5,7 +5,7 @@
     default values for any settings that have a valid range.
 #>
 
-configuration Sample_WindowsServer_Default
+configuration Example
 {
     param
     (
@@ -21,9 +21,12 @@ configuration Sample_WindowsServer_Default
         WindowsServer BaseLine
         {
             OsVersion   = '2012R2'
-            OsRole      = 'MemberServer'
+            OsRole      = 'MS'
+            StigVersion = '2.12'
+            DomainName  = 'sample.test'
+            ForestName  = 'sample.test'
         }
     }
 }
 
-Sample_WindowsServer_Default
+Example

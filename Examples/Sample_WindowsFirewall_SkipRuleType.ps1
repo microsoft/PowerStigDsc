@@ -1,4 +1,3 @@
-
 <#
     Use embedded STIG data and skip an entire rule set.
     In this example, the Windows Firewall V1 R6 STIG is processed by the composite resource
@@ -6,7 +5,7 @@
     Additionally, a skip is added inline to the configuration, so that the setting for all
     STIG ID's with the type 'AuditPolicyRule' would be marked to skip configuration when applied.
 #>
-configuration Sample_WindowsFirewall_SkipRuleType
+configuration Example
 {
     param
     (
@@ -27,4 +26,4 @@ configuration Sample_WindowsFirewall_SkipRuleType
     }
 }
 
-Sample_WindowsFirewall_SkipRuleType
+Example

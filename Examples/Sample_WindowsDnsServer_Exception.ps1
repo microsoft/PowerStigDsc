@@ -1,4 +1,4 @@
-﻿<#
+<#
     Use embedded STIG data and inject exception data. In this example,
     the Windows DNS Server 2012 R2 V1 R7 STIG is processed by the
     composite resource and merges in the default values for any settings
@@ -7,7 +7,7 @@
     over written with the value 1.
 #>
 
-configuration Sample_WindowsDnsServer_Exception
+configuration Example
 {
     param
     (
@@ -23,10 +23,12 @@ configuration Sample_WindowsDnsServer_Exception
         WindowsDnsServer DnsSettings
         {
             OsVersion   = '2012R2'
-            StigVersion = '1.7'
-            Exception   = @{"V-1000"='1'}
+            StigVersion = '1.9'
+            DomainName  = 'integation.test'
+            ForestName  = 'integation.test'
+            Exception   = @{"V-58697.a"=@{'Identity'='Administrators,DnsAdministrators'}}
         }
     }
 }
 
-Sample_WindowsDnsServer_Exception
+Example

@@ -1,12 +1,12 @@
 Configuration Browser_config
 {
-    param 
+    param
     (
         [Parameter(Mandatory = $true)]
         [string]
         $BrowserVersion,
 
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [string]
         $StigVersion
     )
@@ -18,7 +18,7 @@ Configuration Browser_config
         Browser InternetExplorer
         {
             BrowserVersion = $BrowserVersion
-            Stigversion = $StigVersion
-        } 
+            Stigversion    = $StigVersion
+        }
     }
 }

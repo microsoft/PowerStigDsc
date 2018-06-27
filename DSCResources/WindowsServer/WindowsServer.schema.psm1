@@ -1,11 +1,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-#region Header
 using module ..\helper.psm1
 using module PowerStig
-#endregion Header
-#region Composite
+
 <#
     .SYNOPSIS
         A composite DSC resource to manage the Windows Server STIG settings
@@ -20,6 +18,10 @@ using module PowerStig
     .PARAMETER StigVersion
         Uses the OsVersion and OsRole to select the version of the STIG to apply and monitor. If
         this parameter is not provided, the most recent version of the STIG is automatically selected.
+
+    .PARAMETER ForestName
+        A string that sets the forest name for items such as security group. The input should be the FQDN of the forest.
+        If this is omitted the forest name of the computer that generates the configuration will be used.
 
     .PARAMETER DomainName
         A string that sets the domain name for items such as security group. The input should be the FQDN of the domain.
@@ -42,43 +44,6 @@ using module PowerStig
     .PARAMETER SkipRuleType
         All STIG rule IDs of the specified type are collected in an array and passed to the Skip-Rule
         function. Each rule follows the same process as the SkipRule parameter.
-
-    .EXAMPLE
-        In this example, the 2.9 version of the 2012R2 member server STIG is applied and the
-        contoso.com domain name overrides the domain name of the local computer to enable the
-        configuration to be used in a separate environment.
-
-        Import-DscResource -ModuleName PowerStigDsc
-
-        Node localhost
-        {
-            WindowsServer BaseLine
-            {
-                OsVersion   = '2012R2'
-                OsRole      = 'MemberServer'
-                StigVersion = '2.9'
-                DomainName  = 'contoso.com'
-            }
-        }
-
-    .EXAMPLE
-        In this example, the 2.9 version of the 2012R2 member server STIG is applied, but the value
-        for STIG id V-1000 is being overridden with the value of 2. This configuration will
-        automatically flag the item as an exception in the DSC logs to help you identify exceptions
-        to policy.
-
-        Import-DscResource -ModuleName PowerStigDsc
-
-        Node localhost
-        {
-            WindowsServer BaseLine
-            {
-                OsVersion     = '2012R2'
-                OsRole        = 'MemberServer'
-                StigVersion   = '2.9'
-                StigException = @{'V-1000'='2'}
-            }
-        }
 #>
 Configuration WindowsServer
 {
@@ -97,7 +62,7 @@ Configuration WindowsServer
 
         [Parameter()]
         [ValidateNotNullOrEmpty()]
-        [ValidateSet('2.9')]
+        [ValidateSet('2.9','2.12')]
         [version]
         $StigVersion,
 
@@ -171,25 +136,30 @@ Configuration WindowsServer
     $technology        = [Technology]::New( "Windows" )
     $technologyVersion = [TechnologyVersion]::New( $OsVersion, $technology )
     $technologyRole    = [TechnologyRole]::New( $OsRole, $technologyVersion )
-    $StigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology, $technologyRole, $technologyVersion, $exceptionsObject , $skipRuleTypeObject, $skipRuleObject )
+    $StigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
+                                          $technologyRole, $technologyVersion, $exceptionsObject,
+                                          $skipRuleTypeObject, $skipRuleObject )
 
     $StigData = $StigDataObject.StigXml
-
     # $resourcePath is exported from the helper module in the header
+
     Import-DscResource -ModuleName AuditPolicyDsc
     . "$resourcePath\windows.AuditPolicySubcategory.ps1"
+
     Import-DscResource -ModuleName AccessControlDsc
     . "$resourcePath\windows.AccessControl.ps1"
+
     Import-DscResource -ModuleName PSDesiredStateConfiguration
     . "$resourcePath\windows.Registry.ps1"
     . "$resourcePath\windows.Script.wmi.ps1"
     . "$resourcePath\windows.Script.skip.ps1"
     . "$resourcePath\windows.WindowsFeature.ps1"
+
     Import-DscResource -ModuleName xPSDesiredStateConfiguration
     . "$resourcePath\windows.xService.ps1"
+
     Import-DscResource -ModuleName SecurityPolicyDsc
     . "$resourcePath\windows.AccountPolicy.ps1"
     . "$resourcePath\windows.UserRightsAssignment.ps1"
     . "$resourcePath\windows.SecurityOption.ps1"
 }
-#endregion Composite

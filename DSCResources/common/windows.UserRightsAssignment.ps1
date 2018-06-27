@@ -29,7 +29,7 @@ $domainName = PowerStig\Get-DomainName -DomainName $DomainName -Format NetbiosNa
 $forestName = PowerStig\Get-DomainName -ForestName $ForestName -Format NetbiosName
 
 #endregion Header
-#region Resource
+
 Foreach ( $rule in $rules )
 {
     Write-Verbose $rule
@@ -46,6 +46,11 @@ Foreach ( $rule in $rules )
         {
             [void] $IdentityList.Add($forestGroupTranslation.$identity -f $forestName )
         }
+        # default to adding the identify as provided for any non-default identities.
+        else
+        {
+            [void] $IdentityList.Add($identity)
+        }
     }
 
     UserRightsAssignment (Get-ResourceTitle -Rule $rule)
@@ -54,4 +59,3 @@ Foreach ( $rule in $rules )
         Identity = $IdentityList
     }
 }
-#endregion Resource
