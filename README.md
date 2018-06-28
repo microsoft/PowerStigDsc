@@ -151,3 +151,4 @@ None
 * Windows DNS Server Composite
 * Windows Firewall Composite
 * Windows Server Composite
+* Added ModuleVersion parameter to each Import-DscResource for all composite resources
