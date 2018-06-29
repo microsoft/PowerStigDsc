@@ -145,10 +145,11 @@ None
 
 ### Unreleased
 
+* Added ModuleVersion parameter to each Import-DscResource for all composite resources
+
 ### 1.0.0.0
 
 * Browser Composite
 * Windows DNS Server Composite
 * Windows Firewall Composite
 * Windows Server Composite
-* Added ModuleVersion parameter to each Import-DscResource for all composite resources
