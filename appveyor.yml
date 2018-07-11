@@ -6,7 +6,7 @@ version: 1.0.{build}.0
 install:
     - ps: Write-Verbose -Message "PowerShell version $($PSVersionTable.PSVersion)" -Verbose
     - ps: (Import-PowerShellDataFile "$env:APPVEYOR_BUILD_FOLDER\PowerStigDsc.psd1").RequiredModules |
-            ForEach-Object { Install-Module $PSItem.moduleName -MinimumVersion $PSItem.ModuleVersion -Repository PSGallery -Scope CurrentUser -Force }
+            ForEach-Object { Install-Module $PSItem.moduleName -RequiredVersion $PSItem.ModuleVersion -Repository PSGallery -Scope CurrentUser -Force }
     - git clone https://github.com/PowerShell/DscResource.Tests
     - ps: Import-Module "$env:APPVEYOR_BUILD_FOLDER\DscResource.Tests\AppVeyor.psm1"
     - ps: Invoke-AppveyorInstallTask
