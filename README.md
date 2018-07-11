@@ -145,6 +145,8 @@ None
 
 ### Unreleased
 
+* Added ModuleVersion parameter to each Import-DscResource for all composite resources
+
 ### 1.0.0.0
 
 * Browser Composite

@@ -26,12 +26,12 @@ CLRVersion = '4.0'
 # Modules that must be imported into the global environment prior to importing this module
 RequiredModules  = @(
     @{ModuleName = 'PowerStig'; ModuleVersion = '1.0.0.0'},
-    @{ModuleName = 'AuditPolicyDsc'; ModuleVersion = '1.1.0.0'},
+    @{ModuleName = 'AuditPolicyDsc'; ModuleVersion = '1.2.0.0'},
     @{ModuleName = 'AccessControlDsc'; ModuleVersion = '1.1.0.0'},
-    @{ModuleName = 'SecurityPolicyDsc'; ModuleVersion = '2.1.0.0'},
+    @{ModuleName = 'SecurityPolicyDsc'; ModuleVersion = '2.3.0.0'},
     @{ModuleName = 'xDnsServer'; ModuleVersion = '1.9.0.0'},
-    @{ModuleName = 'xPSDesiredStateConfiguration'; ModuleVersion = '8.0.0.0'},
-    @{ModuleName = 'xWinEventLog'; ModuleVersion = '1.1.0.0'}
+    @{ModuleName = 'xPSDesiredStateConfiguration'; ModuleVersion = '8.3.0.0'},
+    @{ModuleName = 'xWinEventLog'; ModuleVersion = '1.2.0.0'}
     )
 
 DscResourcesToExport = @('Browser', 'WindowsDnsServer', 'WindowsFirewall', 'WindowsServer')
