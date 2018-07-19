@@ -5,7 +5,7 @@ master: [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdln
 dev: [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true)
 
 **PowerStigDsc** is a Windows PowerShell Desired State Configuration (DSC) composite resource to manage the configurable items of the DISA STIG's.
-This is accomplished by using Microsoft supported OSS DSC Resources from the PowerShell gallery which that are specialized to a specific area of the STIG.
+This is accomplished by using OSS DSC Resources that are specialized to a specific area of the STIG from the PowerShell gallery. PowerStigDsc depends on an external module [PowerStig](https://github.com/Microsoft/PowerStig) for the STIG data and multiple DSC resources to apply the setting. All of the required dependencies are defined in the module manifest so they are automatically downloaded if you install PowerStigDsc from the [PowerShell Gallery](https://www.powershellgallery.com/packages/PowerStigDsc).
 
 This project has adopted the [Microsoft Open Source Code of Conduct](
   https://opensource.microsoft.com/codeofconduct/).
@@ -23,7 +23,7 @@ Please check out common DSC Resources [contributing guidelines](
 
 * [Browser](#Browser): Provides a mechanism to manage Browser STIG settings.
 
-* [WindowsDnsServer](#WindowsDnsServer): Provides a mechanism to manage Windows Dns Server STIG settings.
+* [WindowsDnsServer](#WindowsDnsServer): Provides a mechanism to manage Windows DNS Server STIG settings.
 
 * [WindowsFirewall](#WindowsFirewall): Provides a mechanism to manage the Windows Firewall STIG settings.
 
@@ -42,7 +42,7 @@ None
 * **[String] BrowserName _(Mandatory)_**: The version of the Browser that the configuration is applying to.
 * **[String] BrowserVersion _(Optional)_**: The Browser version of the STIG you want to apply. If no value is provided, the most recent version of the STIG is applied.
 * **[Hashtable] Exception _(Optional)_**: A hash table of the exceptions that should be applied to the server. The hashtable must be in the format StigId = Exception.
-* **[Xml] OrgSetting _(Optional)_**: An xml document that contains the values for settings that contain a range of possible values.
+* **[Xml] OrgSetting _(Optional)_**: An XML document that contains the values for settings that contain a range of possible values.
 
 #### Examples
 
@@ -64,9 +64,9 @@ None
 * **[String] ForestName _(Optional)_**: The FQDN of the forest the configuration is being applied to. If a domain name is not applied, the domain of the computer used to generate the configuration is used.
 * **[String] DomainName _(Optional)_**: The FQDN of the domain the configuration is being applied to. If a domain name is not applied, the domain of the computer used to generate the configuration is used.
 * **[Hashtable] Exception _(Optional)_**: A hash table of the exceptions to be applied to the server. The hashtable must be in the format StigId = Exception.
-* **[Xml] OrgSetting _(Optional)_**: This is an xml file that overrides the default settings of allowable ranges in the STIG.
-* **[PSObject] SkipRule _(Optional)_**: Rule Id/s that you do not want applied to the server.
-* **[PSObject] SkipRuleType _(Optional)_**: Rule type/s that you do not want applied to the server.
+* **[Xml] OrgSetting _(Optional)_**: This is an XML file that overrides the default settings of allowable ranges in the STIG.
+* **[PSObject] SkipRule _(Optional)_**: Rule Id/s that you do not want to be applied to the server.
+* **[PSObject] SkipRuleType _(Optional)_**: Rule type/s that you do not want to be applied to the server.
 
 #### Examples
 
@@ -91,9 +91,9 @@ None
 
 * **[String] StigVersion _(Optional)_**: The version of the STIG you want to apply. If no value is provided, the most recent version of the STIG is applied.
 * **[Hashtable] Exception _(Optional)_**: A hash table of the exceptions to be applied to the server. The hashtable must be in the format StigId = Exception.
-* **[Xml] OrgSetting _(Optional)_**: This is an xml file that overrides the default settings of allowable ranges in the STIG.
-* **[PSObject] SkipRule _(Optional)_**: Rule Id/s that you do not want applied to the server.
-* **[PSObject] SkipRuleType _(Optional)_**: Rule type/s that you do not want applied to the server.
+* **[Xml] OrgSetting _(Optional)_**: This is an XML file that overrides the default settings of allowable ranges in the STIG.
+* **[PSObject] SkipRule _(Optional)_**: Rule Id/s that you do not want to be applied to the server.
+* **[PSObject] SkipRuleType _(Optional)_**: Rule type/s that you do not want to be applied to the server.
 
 #### Examples
 
@@ -122,9 +122,9 @@ None
 * **[String] ForestName _(Optional)_**: The FQDN of the forest the configuration is being applied to. If a domain name is not applied, the domain of the computer used to generate the configuration is used.
 * **[String] DomainName _(Optional)_**: The FQDN of the domain the configuration is being applied to. If a domain name is not applied, the domain of the computer used to generate the configuration is used.
 * **[Hashtable] Exception _(Optional)_**: A hash table of the exceptions to be applied to the server. The hashtable must be in the format StigId = Exception.
-* **[Xml] OrgSetting _(Optional)_**: This is an xml file that overrides the default settings of allowable ranges in the STIG.
-* **[PSObject] SkipRule _(Optional)_**: Rule Id/s that you do not want applied to the server.
-* **[PSObject] SkipRuleType _(Optional)_**: Rule type/s that you do not want applied to the server.
+* **[Xml] OrgSetting _(Optional)_**: This is an XML file that overrides the default settings of allowable ranges in the STIG.
+* **[PSObject] SkipRule _(Optional)_**: Rule Id/s that you do not want to be applied to the server.
+* **[PSObject] SkipRuleType _(Optional)_**: Rule type/s that you do not want to be applied to the server.
 
 #### Examples
 
