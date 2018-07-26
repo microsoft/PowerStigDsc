@@ -4,6 +4,8 @@
 
     SqlServer        = @("*Instance*", "*Database*")
 
+    DotNetFramework  = @("*DotNet*")
+
     WindowsFirewall  = @("*FW*")
 
     WindowsDnsServer = @("*DNS*")
