@@ -145,6 +145,8 @@ None
 
 ### Unreleased
 
+### 1.1.0.0
+
 * Added ModuleVersion parameter to each Import-DscResource for all composite resources
 * Added support for Technology enumeration added to PowerStig 1.1.0.0
 
