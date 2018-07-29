@@ -4,10 +4,6 @@
         "target": ""
     },
     {
-        "src": "PowerStigDsc.psm1",
-        "target": ""
-    },
-    {
         "src": "README.md",
         "target": ""
     },
