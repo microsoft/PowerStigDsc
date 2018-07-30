@@ -25,7 +25,7 @@ CLRVersion = '4.0'
 
 # Modules that must be imported into the global environment prior to importing this module
 RequiredModules  = @(
-    @{ModuleName = 'PowerStig'; ModuleVersion = '1.0.0.0'},
+    @{ModuleName = 'PowerStig'; ModuleVersion = '1.1.0.0'},
     @{ModuleName = 'AuditPolicyDsc'; ModuleVersion = '1.2.0.0'},
     @{ModuleName = 'AccessControlDsc'; ModuleVersion = '1.1.0.0'},
     @{ModuleName = 'SecurityPolicyDsc'; ModuleVersion = '2.3.0.0'},
