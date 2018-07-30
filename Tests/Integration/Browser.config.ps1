@@ -11,8 +11,7 @@ Configuration Browser_config
         $StigVersion
     )
 
-    Import-DscResource -ModuleName PowerStigDsc
-
+    Import-DscResource -ModuleName PowerStigDsc -ModuleVersion 1.0.0.0
     Node localhost
     {
         Browser InternetExplorer
