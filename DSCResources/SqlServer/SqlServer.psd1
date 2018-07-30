@@ -21,10 +21,10 @@ ModuleVersion = '0.9'
 GUID = 'f74989a0-e80c-48e1-8f38-387330db3e85'
 
 # Author of this module
-Author = 'chasewilson'
+Author = 'Microsoft Corporation'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'Microsoft Corporation'
 
 # Copyright statement for this module
 Copyright = '(c) 2018 chasewilson. All rights reserved.'

@@ -3,10 +3,10 @@
     Browser          = @("*IE*")
 
     SqlServer        = @("*Instance*", "*Database*")
-    
+
     WindowsFirewall  = @("*FW*")
-    
+
     WindowsDnsServer = @("*DNS*")
-    
+
     WindowsServer    = @("*DC*", "*MS*")
 }

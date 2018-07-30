@@ -10,7 +10,7 @@ Configuration SqlServerInstance_config
         [string]
         $SqlRole,
 
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $StigVersion
     )
@@ -41,7 +41,7 @@ Configuration SqlServerDatabase_config
         [string]
         $SqlRole,
 
-        [Parameter(Mandatory = $false)]
+        [Parameter()]
         [string]
         $StigVersion
     )

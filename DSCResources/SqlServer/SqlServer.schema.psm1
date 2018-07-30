@@ -75,7 +75,7 @@ Configuration SqlServer
         [ValidateSet('Database', 'Instance')]
         [string]
         $SqlRole,
-        
+ 
         [Parameter()]
         [ValidateSet('1.16', '1.17')]
         [ValidateNotNullOrEmpty()]
@@ -149,19 +149,7 @@ Configuration SqlServer
         $orgSettingsObject = $null
     }
 
-    # BEGIN: This is a temporary fix until PowerStig has migrated the technolgy class to an enumeration
-    if ((New-Object Technology).GetType().BaseType.Name -eq 'Enum')
-    {
-        # BEGIN: leave this after the temp fix is removed
-        $technology = [Technology]::SqlServer
-        # END: leave this after the temp fix is removed
-    }
-    else
-    {
-        $technology = [Technology]::New( "SqlServer" )
-    }
-    # END: This is a temporary fix until PowerStig has migrated the technolgy class to an enumeration
-
+    $technology = [Technology]::SqlServer
     $technologyVersion = [TechnologyVersion]::New( $SqlVersion, $technology )
     $technologyRole = [TechnologyRole]::New( $SqlRole, $technologyVersion )
     $StigDataObject = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,

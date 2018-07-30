@@ -22,8 +22,8 @@ SqlServer [string] #ResourceName
 | Property | Description |
 | -------- | ----------- |
 | SqlVersion     | The version of the SQL Server Version that the configuration is applying to. |
-| SqlRole        | The scope that the STIG will cover that the configuration is applying to. |
-| ServerInstance | The SQL Server Instance Name. If you want the default Instance, Only use the hostiing computer name. |
+| SqlRole        | The scope that the STIG will cover. |
+| ServerInstance | The SQL Server Instance Name. If you want the default Instance, Only use the hosting computer name. |
 | Database       | The name of the database that the configuration is applying to. |
 | StigVersion    | The version of the STIG you want to apply. If no value is provided, the most recent version of the STIG is applied. |
 | Exception      | A hash table of the exceptions to be applied to the server. The hashtable must be in the format StigId = Exception |
