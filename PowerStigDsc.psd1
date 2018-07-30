@@ -31,7 +31,8 @@ RequiredModules  = @(
     @{ModuleName = 'SecurityPolicyDsc'; ModuleVersion = '2.3.0.0'},
     @{ModuleName = 'xDnsServer'; ModuleVersion = '1.9.0.0'},
     @{ModuleName = 'xPSDesiredStateConfiguration'; ModuleVersion = '8.3.0.0'},
-    @{ModuleName = 'xWinEventLog'; ModuleVersion = '1.2.0.0'}
+    @{ModuleName = 'xWinEventLog'; ModuleVersion = '1.2.0.0'},
+    @{ModuleName = 'SqlServerDsc'; ModuleVersion = '11.4.0.0'}
     )
 
 DscResourcesToExport = @('Browser', 'WindowsDnsServer', 'WindowsFirewall', 'WindowsServer')
