@@ -26,8 +26,12 @@ Thank you to everyone that has reviewed the project and provided feedback throug
 We are especially thankful for those who have contributed pull requests to the code and documentation.
 
 * [@athaynes](https://github.com/athaynes) (Adam Haynes)
+* [@bgouldman](https://github.com/bgouldman) (Brian Gouldman)
 * [@camusicjunkie](https://github.com/camusicjunkie)
 * [@chasewilson](https://github.com/chasewilson) (Chase Wilson)
+* [@jcwalker](https://github.com/jcwalker) (Jason Walker)
+* [@mcollera](https://github.com/mcollera)
+* [@regedit32](https://github.com/regedit32) (Reggie Gibson)
 
 ## Composite Resources
 
