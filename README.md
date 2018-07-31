@@ -1,8 +1,9 @@
 # PowerStigDsc
 
-master: [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/master?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/master?svg=true)
-
-dev: [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true)
+|Branch|Status|
+| ---- | ---- |
+| master | [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/master?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/master?svg=true) |
+| dev | [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true) |
 
 **PowerStigDsc** is a Windows PowerShell Desired State Configuration (DSC) composite resource to manage the configurable items of the DISA STIG's.
 This is accomplished by using OSS DSC Resources that are specialized to a specific area of the STIG from the PowerShell gallery. PowerStigDsc depends on an external module [PowerStig](https://github.com/Microsoft/PowerStig) for the STIG data and multiple DSC resources to apply the setting. All of the required dependencies are defined in the module manifest so they are automatically downloaded if you install PowerStigDsc from the [PowerShell Gallery](https://www.powershellgallery.com/packages/PowerStigDsc).
@@ -18,6 +19,15 @@ or comments.
 
 Please check out common DSC Resources [contributing guidelines](
   https://github.com/PowerShell/DscResources/blob/master/CONTRIBUTING.md).
+
+### Contributors
+
+Thank you to everyone that has reviewed the project and provided feedback through issues.
+We are especially thankful for those who have contributed pull requests to the code and documentation.
+
+* [@athaynes](https://github.com/athaynes) (Adam Haynes)
+* [@camusicjunkie](https://github.com/camusicjunkie)
+* [@chasewilson](https://github.com/chasewilson) (Chase Wilson)
 
 ## Composite Resources
 
