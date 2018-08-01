@@ -1,2 +1,8 @@
 DSCResource.Tests
 .vscode/
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/.vs/PowerStigDsc/v15
+
+
