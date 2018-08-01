@@ -97,7 +97,18 @@ Configuration WindowsFirewall
         $orgSettingsObject = $null
     }
 
-    $technology        = [Technology]::New( "Windows" )
+    # BEGIN: This is a temporary fix until PowerStig has migrated the technolgy class to an enumeration
+    if ((New-Object Technology).GetType().BaseType.Name -eq 'Enum')
+    {
+        # BEGIN: leave this after the temp fix is removed
+        $technology = [Technology]::Windows
+        # END: leave this after the temp fix is removed
+    }
+    else
+    {
+        $technology = [Technology]::New( "Windows" )
+    }
+    # END: This is a temporary fix until PowerStig has migrated the technolgy class to an enumeration
     $technologyVersion = [TechnologyVersion]::New( "All", $technology )
     $technologyRole    = [TechnologyRole]::New( "FW", $technologyVersion )
     $StigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
@@ -107,6 +118,6 @@ Configuration WindowsFirewall
     $StigData = $StigDataObject.StigXml
     # $resourcePath is exported from the helper module in the header
 
-    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Import-DscResource -ModuleName PSDesiredStateConfiguration -ModuleVersion 1.1
     . "$resourcePath\windows.Registry.ps1"
 }
