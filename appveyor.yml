@@ -11,7 +11,8 @@
 version: 1.1.0.{build}
 skip_commits:
   files:
-   - '**/*.md'
+    - '**/*.md'
+    - .github/*
 
 #---------------------------------#
 #      environment configuration  #
@@ -60,4 +61,3 @@ for:
       name: Test PS Gallery
       on:
         appveyor_repo_tag: true
-
