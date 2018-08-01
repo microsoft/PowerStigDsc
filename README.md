@@ -85,9 +85,9 @@ None
 
 * [Apply the Windows SQL Server STIG to a node](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_SqlServer_Default.ps1)
-* [Apply the Windows SQL Server STIG to a node, but override the value of V-1000](
+* [Apply the Windows SQL Server STIG to a node, but override the value of V-V-40942](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_SqlServer_Exception.ps1)
-* [Apply the Windows SQL Server STIG to a node, but skip V-1000](
+* [Apply the Windows SQL Server STIG to a node, but skip V-V-40942](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_SqlServer_SkipRule.ps1)
 * [Apply the Windows SQL Server STIG to a node, but skip SqlScriptQueryRule](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_SqlServer_SkipRuleType.ps1)

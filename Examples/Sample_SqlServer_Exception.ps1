@@ -26,7 +26,7 @@ configuration Example
             SqlRole        = 'Instance'
             StigVersion    = '1.17'
             ServerInstance = 'ServerX\TestInstance'
-            Exception      = @{'V-1000'= @{'ValueData'='1'} }
+            Exception      = @{'V-40942'= @{'GetScript'="SELECT name from sysdatabases where name like 'DefaultDataBase'"} }
         }
     }
 }
