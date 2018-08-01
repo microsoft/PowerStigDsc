@@ -99,7 +99,7 @@ function Get-StigVersionTable
     $include = Import-PowerShellDataFile -Path $PSScriptRoot\CompositeResourceFilter.psd1
 
     $path = "$((((Get-Module -Name PowerStig -ListAvailable) |
-        Sort-Object Version)[-1]).ModuleBase)\StigData"
+        Sort-Object Version)[-1]).ModuleBase)\StigData\Processed"
 
     $versions = Get-ChildItem -Path $path -Exclude "*.org.*", "*.xsd" -Include $include.$CompositeResourceName -File -Recurse
 

@@ -133,7 +133,18 @@ Configuration WindowsServer
         $orgSettingsObject = $null
     }
 
-    $technology        = [Technology]::New( "Windows" )
+    # BEGIN: This is a temporary fix until PowerStig has migrated the technolgy class to an enumeration
+    if ((New-Object Technology).GetType().BaseType.Name -eq 'Enum')
+    {
+        # BEGIN: leave this after the temp fix is removed
+        $technology = [Technology]::Windows
+        # END: leave this after the temp fix is removed
+    }
+    else
+    {
+        $technology = [Technology]::New( "Windows" )
+    }
+    # END: This is a temporary fix until PowerStig has migrated the technolgy class to an enumeration
     $technologyVersion = [TechnologyVersion]::New( $OsVersion, $technology )
     $technologyRole    = [TechnologyRole]::New( $OsRole, $technologyVersion )
     $StigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
@@ -143,22 +154,22 @@ Configuration WindowsServer
     $StigData = $StigDataObject.StigXml
     # $resourcePath is exported from the helper module in the header
 
-    Import-DscResource -ModuleName AuditPolicyDsc
+    Import-DscResource -ModuleName AuditPolicyDsc -ModuleVersion 1.2.0.0
     . "$resourcePath\windows.AuditPolicySubcategory.ps1"
 
-    Import-DscResource -ModuleName AccessControlDsc
+    Import-DscResource -ModuleName AccessControlDsc -ModuleVersion 1.1.0.0
     . "$resourcePath\windows.AccessControl.ps1"
 
-    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Import-DscResource -ModuleName PSDesiredStateConfiguration -ModuleVersion 1.1
     . "$resourcePath\windows.Registry.ps1"
     . "$resourcePath\windows.Script.wmi.ps1"
     . "$resourcePath\windows.Script.skip.ps1"
     . "$resourcePath\windows.WindowsFeature.ps1"
 
-    Import-DscResource -ModuleName xPSDesiredStateConfiguration
+    Import-DscResource -ModuleName xPSDesiredStateConfiguration -ModuleVersion 8.3.0.0
     . "$resourcePath\windows.xService.ps1"
 
-    Import-DscResource -ModuleName SecurityPolicyDsc
+    Import-DscResource -ModuleName SecurityPolicyDsc -ModuleVersion 2.3.0.0
     . "$resourcePath\windows.AccountPolicy.ps1"
     . "$resourcePath\windows.UserRightsAssignment.ps1"
     . "$resourcePath\windows.SecurityOption.ps1"

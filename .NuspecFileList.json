@@ -1,0 +1,18 @@
+[
+    {
+        "src": "PowerStigDsc.psd1",
+        "target": ""
+    },
+    {
+        "src": "README.md",
+        "target": ""
+    },
+    {
+        "src": "LICENSE*",
+        "target": ""
+    },
+    {
+        "src": "DSCResources\\**",
+        "target": "DSCResources\\"
+    }
+]

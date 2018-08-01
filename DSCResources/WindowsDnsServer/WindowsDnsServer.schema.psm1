@@ -123,7 +123,18 @@ Configuration WindowsDnsServer
         $orgSettingsObject = $null
     }
 
-    $technology        = [Technology]::New( "Windows" )
+    # BEGIN: This is a temporary fix until PowerStig has migrated the technolgy class to an enumeration
+    if ((New-Object Technology).GetType().BaseType.Name -eq 'Enum')
+    {
+        # BEGIN: leave this after the temp fix is removed
+        $technology = [Technology]::Windows
+        # END: leave this after the temp fix is removed
+    }
+    else
+    {
+        $technology = [Technology]::New( "Windows" )
+    }
+    # END: This is a temporary fix until PowerStig has migrated the technolgy class to an enumeration
     $technologyVersion = [TechnologyVersion]::New( $OsVersion, $technology )
     $technologyRole    = [TechnologyRole]::New( "DNS", $technologyVersion )
     $stigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
@@ -133,19 +144,19 @@ Configuration WindowsDnsServer
     $stigData = $stigDataObject.StigXml
     # $resourcePath is exported from the helper module in the header
 
-    Import-DscResource -ModuleName xDnsServer
+    Import-DscResource -ModuleName xDnsServer -ModuleVersion 1.9.0.0
     . "$resourcePath\windows.xDnsServerSetting.ps1"
 
-    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Import-DscResource -ModuleName PSDesiredStateConfiguration -ModuleVersion 1.1
     . "$resourcePath\windows.Registry.ps1"
     . "$resourcePath\windows.Script.RootHint.ps1"
 
-    Import-DscResource -ModuleName SecurityPolicyDsc
+    Import-DscResource -ModuleName SecurityPolicyDsc -ModuleVersion 2.3.0.0
     . "$resourcePath\windows.UserRightsAssignment.ps1"
 
-    Import-DscResource -ModuleName AccessControlDsc
+    Import-DscResource -ModuleName AccessControlDsc -ModuleVersion 1.1.0.0
     . "$resourcePath\windows.AccessControl.ps1"
 
-    Import-DscResource -ModuleName xWinEventLog
+    Import-DscResource -ModuleName xWinEventLog -ModuleVersion 1.2.0.0
     . "$resourcePath\windows.xWinEventLog.ps1"
 }

@@ -1,6 +1,6 @@
 @{
 # Version number of this module.
-ModuleVersion = '1.0.0.0'
+ModuleVersion = '1.1.0.0'
 
 # ID used to uniquely identify this module
 GUID = '80479bf1-c535-49de-bd10-9a54a49eb4a1'
@@ -25,16 +25,17 @@ CLRVersion = '4.0'
 
 # Modules that must be imported into the global environment prior to importing this module
 RequiredModules  = @(
-    @{ModuleName = 'PowerStig'; ModuleVersion = '1.0.0.0'},
-    @{ModuleName = 'AuditPolicyDsc'; ModuleVersion = '1.1.0.0'},
+    @{ModuleName = 'PowerStig'; ModuleVersion = '1.1.0.0'},
+    @{ModuleName = 'AuditPolicyDsc'; ModuleVersion = '1.2.0.0'},
     @{ModuleName = 'AccessControlDsc'; ModuleVersion = '1.1.0.0'},
-    @{ModuleName = 'SecurityPolicyDsc'; ModuleVersion = '2.1.0.0'},
+    @{ModuleName = 'SecurityPolicyDsc'; ModuleVersion = '2.3.0.0'},
     @{ModuleName = 'xDnsServer'; ModuleVersion = '1.9.0.0'},
-    @{ModuleName = 'xPSDesiredStateConfiguration'; ModuleVersion = '8.0.0.0'},
-    @{ModuleName = 'xWinEventLog'; ModuleVersion = '1.1.0.0'}
+    @{ModuleName = 'xPSDesiredStateConfiguration'; ModuleVersion = '8.3.0.0'},
+    @{ModuleName = 'xWinEventLog'; ModuleVersion = '1.2.0.0'},
+    @{ModuleName = 'SqlServerDsc'; ModuleVersion = '11.4.0.0'}
     )
 
-DscResourcesToExport = @('Browser', 'WindowsDnsServer', 'WindowsFirewall', 'WindowsServer')
+DscResourcesToExport = @('Browser', 'SqlServer', 'WindowsDnsServer', 'WindowsFirewall', 'WindowsServer')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @()
@@ -68,10 +69,8 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '
-        Production release
-        Fixed resource name formatting
-        Added ForestName parameter to WindowsServer and WindowsDnsServer STIG to properly resolve forest account names.'
+        ReleaseNotes = '* Added ModuleVersion parameter to each Import-DscResource for all composite resources
+* Added support for Technology enumeration added to PowerStig 1.1.0.0'
 
     } # End of PSData hashtable
 
