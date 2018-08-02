@@ -37,7 +37,7 @@ try
                 & "$($script:DSCCompositeResourceName)_config" `
                 -FrameworkVersion $stig.TechnologyRole `
                 -StigVersion $stig.stigVersion `
-            -OutputPath $TestDrive
+                -OutputPath $TestDrive
             } | Should Not throw
         }
 
@@ -73,7 +73,7 @@ try
 finally
 {
 #region FOOTER
-Restore-TestEnvironment -TestEnvironment $TestEnvironment
+    Restore-TestEnvironment -TestEnvironment $TestEnvironment
 #endregion
 }
 
