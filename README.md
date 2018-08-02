@@ -19,11 +19,10 @@ or comments.
 
 Please check out common DSC Resources [contributing guidelines](
   https://github.com/PowerShell/DscResources/blob/master/CONTRIBUTING.md).
-
-### Contributors
-
 Thank you to everyone that has reviewed the project and provided feedback through issues.
 We are especially thankful for those who have contributed pull requests to the code and documentation.
+
+### Contributors
 
 * [@athaynes](https://github.com/athaynes) (Adam Haynes)
 * [@bgouldman](https://github.com/bgouldman) (Brian Gouldman)
@@ -36,6 +35,8 @@ We are especially thankful for those who have contributed pull requests to the c
 ## Composite Resources
 
 * [Browser](#Browser): Provides a mechanism to manage Browser STIG settings.
+
+* [SqlServer](#SqlServer): Provides a mechanism to manage SqlServer STIG settings.
 
 * [WindowsDnsServer](#WindowsDnsServer): Provides a mechanism to manage Windows DNS Server STIG settings.
 
@@ -62,6 +63,37 @@ None
 
 * [Apply the Browser STIG to a node](
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_Browser.ps1)
+
+### SqlServer
+
+Provides a mechanism to manage SqlServer STIG settings.
+
+### Requirements
+
+None
+
+### Parameters
+
+* **[String] SqlVersion _(Mandatory)_**: The version of SQL being used.
+* **[String] SqlRole _(Mandatory)_**: The scope of SQL that the STIG covers. E.g. Instance, Database.
+* **[Version] StigVersion _(Optional)_**: The version of the STIG you want to apply. If no value is provided, the most recent version of the STIG is applied.
+* **[String] ServerInstance _(Mandatory)_**: The name of the SQL Instance that the STIG data will be applied to.
+* **[String] Database _(Optional)_**: The Name of the database that the STIG will be applied to.
+* **[Hashtable] Exception _(Optional)_**: A hash table of the exceptions to be applied to the server. The hashtable must be in the format StigId = Exception.
+* **[Xml] OrgSetting _(Optional)_**: This is an XML file that overrides the default settings of allowable ranges in the STIG.
+* **[PSObject] SkipRule _(Optional)_**: Rule Id/s that you do not want to be applied to the server.
+* **[PSObject] SkipRuleType _(Optional)_**: Rule type/s that you do not want to be applied to the server.
+
+#### Examples
+
+* [Apply the Windows SQL Server STIG to a node](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_SqlServer_Default.ps1)
+* [Apply the Windows SQL Server STIG to a node, but override the value of V-V-40942](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_SqlServer_Exception.ps1)
+* [Apply the Windows SQL Server STIG to a node, but skip V-V-40942](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_SqlServer_SkipRule.ps1)
+* [Apply the Windows SQL Server STIG to a node, but skip SqlScriptQueryRule](
+  https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_SqlServer_SkipRuleType.ps1)
 
 ### WindowsDnsServer
 
@@ -158,6 +190,8 @@ None
 ## Versions
 
 ### Unreleased
+
+### 1.1.0.0
 
 * Added DotNetFramework Composite
 * Added ModuleVersion parameter to each Import-DscResource for all composite resources

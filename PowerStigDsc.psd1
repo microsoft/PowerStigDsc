@@ -1,6 +1,6 @@
 @{
 # Version number of this module.
-ModuleVersion = '1.0.0.0'
+ModuleVersion = '1.1.0.0'
 
 # ID used to uniquely identify this module
 GUID = '80479bf1-c535-49de-bd10-9a54a49eb4a1'
@@ -69,10 +69,8 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '
-        Production release
-        Fixed resource name formatting
-        Added ForestName parameter to WindowsServer and WindowsDnsServer STIG to properly resolve forest account names.'
+        ReleaseNotes = '* Added ModuleVersion parameter to each Import-DscResource for all composite resources
+* Added support for Technology enumeration added to PowerStig 1.1.0.0'
 
     } # End of PSData hashtable
 
