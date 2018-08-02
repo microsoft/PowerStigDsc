@@ -24,7 +24,7 @@ Author = 'LaNika Dillon'
 CompanyName = 'Microsoft Corporation'
 
 # Copyright statement for this module
-Copyright = '(c) 2018 LaNika Dillon. All rights reserved.'
+Copyright = '(c) 2018 Microsoft. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Module for managing the DotNetFramework 4.0 DISA STIGs'
