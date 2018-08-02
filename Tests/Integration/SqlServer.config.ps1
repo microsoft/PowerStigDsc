@@ -15,7 +15,7 @@ Configuration SqlServerInstance_config
         $StigVersion
     )
 
-    Import-DscResource -ModuleName PowerStigDsc -ModuleVersion 1.0.0.0
+    Import-DscResource -ModuleName PowerStigDsc
 
     Node localhost
     {
@@ -46,7 +46,7 @@ Configuration SqlServerDatabase_config
         $StigVersion
     )
 
-    Import-DscResource -ModuleName PowerStigDsc -ModuleVersion 1.0.0.0
+    Import-DscResource -ModuleName PowerStigDsc
 
     Node localhost
     {
