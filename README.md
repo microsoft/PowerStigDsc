@@ -19,11 +19,10 @@ or comments.
 
 Please check out common DSC Resources [contributing guidelines](
   https://github.com/PowerShell/DscResources/blob/master/CONTRIBUTING.md).
-
-### Contributors
-
 Thank you to everyone that has reviewed the project and provided feedback through issues.
 We are especially thankful for those who have contributed pull requests to the code and documentation.
+
+### Contributors
 
 * [@athaynes](https://github.com/athaynes) (Adam Haynes)
 * [@bgouldman](https://github.com/bgouldman) (Brian Gouldman)
