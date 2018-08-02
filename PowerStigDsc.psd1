@@ -35,7 +35,7 @@ RequiredModules  = @(
     @{ModuleName = 'SqlServerDsc'; ModuleVersion = '11.4.0.0'}
     )
 
-DscResourcesToExport = @('Browser', 'SqlServer', 'WindowsDnsServer', 'WindowsFirewall', 'WindowsServer')
+DscResourcesToExport = @('Browser', 'DotNetFramework','SqlServer', 'WindowsDnsServer', 'WindowsFirewall', 'WindowsServer')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @()
