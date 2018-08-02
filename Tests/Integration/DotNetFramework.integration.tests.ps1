@@ -30,7 +30,6 @@ try
     #region Integration Tests
     Foreach ($stig in $stigList)
     {
-
         Describe "Framework $($stig.TechnologyRole) $($stig.StigVersion) mof output" {
 
         It 'Should compile the MOF without throwing' {
