@@ -97,18 +97,7 @@ Configuration WindowsFirewall
         $orgSettingsObject = $null
     }
 
-    # BEGIN: This is a temporary fix until PowerStig has migrated the technolgy class to an enumeration
-    if ((New-Object Technology).GetType().BaseType.Name -eq 'Enum')
-    {
-        # BEGIN: leave this after the temp fix is removed
-        $technology = [Technology]::Windows
-        # END: leave this after the temp fix is removed
-    }
-    else
-    {
-        $technology = [Technology]::New( "Windows" )
-    }
-    # END: This is a temporary fix until PowerStig has migrated the technolgy class to an enumeration
+    $technology        = [Technology]::Windows
     $technologyVersion = [TechnologyVersion]::New( "All", $technology )
     $technologyRole    = [TechnologyRole]::New( "FW", $technologyVersion )
     $StigDataObject    = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
