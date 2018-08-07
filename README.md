@@ -34,15 +34,15 @@ We are especially thankful for those who have contributed pull requests to the c
 
 ## Composite Resources
 
-* [Browser](#Browser): Provides a mechanism to manage Browser STIG settings.
+* [Browser](https://github.com/Microsoft/PowerStigDsc/wiki/Browser): Provides a mechanism to manage Browser STIG settings.
 
-* [SqlServer](#SqlServer): Provides a mechanism to manage SqlServer STIG settings.
+* [SqlServer](https://github.com/Microsoft/PowerStigDsc/wiki/SqlServer): Provides a mechanism to manage SqlServer STIG settings.
 
-* [WindowsDnsServer](#WindowsDnsServer): Provides a mechanism to manage Windows DNS Server STIG settings.
+* [WindowsDnsServer](https://github.com/Microsoft/PowerStigDsc/wiki/WindowsDnsServer): Provides a mechanism to manage Windows DNS Server STIG settings.
 
-* [WindowsFirewall](#WindowsFirewall): Provides a mechanism to manage the Windows Firewall STIG settings.
+* [WindowsFirewall](https://github.com/Microsoft/PowerStigDsc/wiki/WindowsFirewall): Provides a mechanism to manage the Windows Firewall STIG settings.
 
-* [WindowsServer](#WindowsServer): Provides a mechanism to manage the Windows Server STIG settings.
+* [WindowsServer](https://github.com/Microsoft/PowerStigDsc/wiki/WindowsServer): Provides a mechanism to manage the Windows Server STIG settings.
 
 ## Versions
 
