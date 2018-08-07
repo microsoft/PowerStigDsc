@@ -1,7 +1,10 @@
 <#
-    In this example, the Internet Explorer 11 STIG is processed by the composite resource.
-#>
+    .SYNOPSIS
+        Apply the Browser STIG to a node
 
+    .DESCRIPTION
+        In this example, the Internet Explorer 11 STIG is processed by the composite resource
+#>
 Configuration Example
 {
     param

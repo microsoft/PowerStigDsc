@@ -1,14 +1,15 @@
-#region Header
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 using module ..\helper.psm1
 using module PowerStig
-#endregion Header
-#region Composite
+
 <#
     .SYNOPSIS
-        A composite DSC resource to manage the Windows SQL STIG settings
+        A composite DSC resource to manage the SQL STIG settings
 
     .PARAMETER SqlVersion
-        The version of SQL being used (E.g. 'Server2012')
+        The version of SQL being used E.g. 'Server2012'
 
     .PARAMETER SqlRole
         There are two STIGs that cover the scope of SQL. SQL Instance covers each instance of SQL on a server
@@ -18,26 +19,26 @@ using module PowerStig
         The version of the SQL STIG to apply and/or monitor
 
     .PARAMETER ServerInstance
-        The name of the SQL Instance that the STIG data will be applied to. 
+        The name of the SQL Instance that the STIG data will be applied to.
         To define a specific Instance you must use the following format: "ComputerName\InstanceName"
         If you want to use the default instance, you only need to use the hosting computer name.
 
     .PARAMETER Database
-        The Name of the database that you would like to be applied to. This parameter is only used 
+        The Name of the database that you would like to be applied to. This parameter is only used
         for the SQL Database STIG.
 
     .PARAMETER Exception
-        A hashtable of StigId=Value key pairs that are injected into the STIG data and applied to 
-        the target node. The title of STIG settings are tagged with the text ‘Exception’ to identify 
+        A hashtable of StigId=Value key pairs that are injected into the STIG data and applied to
+        the target node. The title of STIG settings are tagged with the text ‘Exception’ to identify
         the exceptions to policy across the data center when you centralize DSC log collection.
 
     .PARAMETER OrgSettings
-        The path to the xml file that contains the local organizations preferred settings for STIG 
+        The path to the xml file that contains the local organizations preferred settings for STIG
         items that have allowable ranges.
 
     .PARAMETER SkipRule
         The SkipRule Node is injected into the STIG data and applied to the taget node. The title
-        of STIG settings are tagged with the text 'Skip' to identify the skips to policy across the 
+        of STIG settings are tagged with the text 'Skip' to identify the skips to policy across the
         data center when you centralize DSC log collection.
 
     .PARAMETER SkipRuleType
@@ -51,7 +52,7 @@ using module PowerStig
 
         Node localhost
         {
-            SqlServer BaseLine 
+            SqlServer BaseLine
             {
                 SqlVersion     = Server2012
                 SqlRole        = Instance
@@ -60,7 +61,6 @@ using module PowerStig
             }
         }
 #>
-
 Configuration SqlServer
 {
     [CmdletBinding()]
@@ -75,7 +75,7 @@ Configuration SqlServer
         [ValidateSet('Database', 'Instance')]
         [string]
         $SqlRole,
- 
+
         [Parameter()]
         [ValidateSet('1.16', '1.17')]
         [ValidateNotNullOrEmpty()]
@@ -90,7 +90,7 @@ Configuration SqlServer
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [string[]]
-        $Database, 
+        $Database,
 
         [Parameter()]
         [ValidateNotNullOrEmpty()]
@@ -153,7 +153,7 @@ Configuration SqlServer
     $technologyVersion = [TechnologyVersion]::New( $SqlVersion, $technology )
     $technologyRole = [TechnologyRole]::New( $SqlRole, $technologyVersion )
     $StigDataObject = [StigData]::New( $StigVersion, $orgSettingsObject, $technology,
-                                       $technologyRole, $technologyVersion, $exceptionsObject, 
+                                       $technologyRole, $technologyVersion, $exceptionsObject,
                                        $skipRuleTypeObject, $skipRuleObject )
 
     $StigData = $StigDataObject.StigXml
@@ -162,4 +162,3 @@ Configuration SqlServer
     Import-DscResource -ModuleName SqlServerDsc
     . "$resourcePath\windows.SqlScriptQuery.ps1"
 }
-#endregion Composite

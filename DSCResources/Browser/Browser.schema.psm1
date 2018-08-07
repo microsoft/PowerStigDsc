@@ -15,16 +15,16 @@ using module PowerStig
         The version of the Windows Server DNS STIG to apply and/or monitor
 
     .PARAMETER Exception
-        A hashtable of StigId=Value key pairs that are injected into the STIG data and applied to
-        the target node. The title of STIG settings are tagged with the text ‘Exception’ to identify
+        A hash table of StigId=Value key pairs that are injected into the STIG data and applied to
+        the target node. The title of STIG setting is tagged with the text ‘Exception’ to identify
         the exceptions to policy across the data center when you centralize DSC log collection.
 
     .PARAMETER OrgSettings
-        The path to the xml file that contains the local organizations preferred settings for STIG
+        The path to the XML file that contains the local organizations preferred settings for STIG
         items that have allowable ranges.
 
     .PARAMETER SkipRule
-        The SkipRule Node is injected into the STIG data and applied to the taget node. The title
+        The SkipRule Node is injected into the STIG data and applied to the target node. The title
         of STIG settings are tagged with the text 'Skip' to identify the skips to policy across the
         data center when you centralize DSC log collection.
 
