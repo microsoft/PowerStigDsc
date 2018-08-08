@@ -191,6 +191,8 @@ None
 
 ### Unreleased
 
+* Added script module back to manifest
+
 ### 1.1.0.0
 
 * Added DotNetFramework Composite
