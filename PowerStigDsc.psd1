@@ -1,4 +1,11 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 @{
+
+# Script module or binary module file associated with this manifest.
+RootModule = 'PowerStigDsc.psm1'
+
 # Version number of this module.
 ModuleVersion = '1.1.0.0'
 
