@@ -49,6 +49,7 @@ We are especially thankful for those who have contributed pull requests to the c
 ### Unreleased
 
 * Replaced PowerStig Technology Class with Enumeration
+* Added script module back to manifest
 
 ### 1.1.0.0
 
