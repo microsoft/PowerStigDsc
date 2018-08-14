@@ -1,9 +1,10 @@
-# PowerStigDsc
+# PowerStigDsc (ARCHIVED)
+
+**PowerStigDsc HAS MOVED** This project has been migrated into [PowerStig](https://github.com/Microsoft/PowerStig) and is currently archived.
 
 |Branch|Status|
 | ---- | ---- |
 | master | [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/master?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/master?svg=true) |
-| dev | [![Build status](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true)](https://ci.appveyor.com/api/projects/status/h9lcjalgdlneyd46/branch/dev?svg=true) |
 
 **PowerStigDsc** is a Windows PowerShell Desired State Configuration (DSC) composite resource to manage the configurable items of the DISA STIG's.
 This is accomplished by using OSS DSC Resources that are specialized to a specific area of the STIG from the PowerShell gallery. PowerStigDsc depends on an external module [PowerStig](https://github.com/Microsoft/PowerStig) for the STIG data and multiple DSC resources to apply the setting. All of the required dependencies are defined in the module manifest so they are automatically downloaded if you install PowerStigDsc from the [PowerShell Gallery](https://www.powershellgallery.com/packages/PowerStigDsc).
@@ -189,8 +190,6 @@ None
   https://github.com/Microsoft/PowerStigDsc/blob/master/Examples/Sample_WindowsServer_SkipRuleType.ps1)
 
 ## Versions
-
-### Unreleased
 
 ### 1.1.0.0
 
